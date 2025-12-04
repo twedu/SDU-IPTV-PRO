@@ -42,6 +42,7 @@ OUTPUT_FILENAME = "输出文件名"
 4. 山东经济广播移到末尾
 ### URL转换
 **回看源**: `rtsp://...${(b)yyyyMMddHHmmss:utc}...` → `http://192.168.100.1:5140/rtsp/...${(b)yyyyMMddHHmmss}...&r2h-seek-offset=-28800`
+
 **直播源**: `192.168.0.1` → `192.168.100.1`
 
 ---
