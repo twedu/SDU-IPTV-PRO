@@ -3,7 +3,7 @@ import requests
 import re
 import hashlib
 import os
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 # ==================== 配置 ====================
 SOURCE_M3U_URL = "https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/multicast/multicast-weifang.m3u"
@@ -18,6 +18,11 @@ class MulticastM3UProcessor:
         self.hash_file = hash_file
         self.channels = []
         self.extm3u_line = "#EXTM3U"  # 保存原始的EXTM3U行
+    
+    def get_beijing_time(self):
+        """获取北京时间（东八区）"""
+        beijing_tz = timezone(timedelta(hours=8))
+        return datetime.now(beijing_tz)
     
     def get_content_hash(self, content):
         """计算内容的MD5哈希值"""
@@ -298,12 +303,12 @@ class MulticastM3UProcessor:
     
     def generate_m3u_content(self):
         """生成新的M3U内容"""
-        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        beijing_time = self.get_beijing_time()
         
         # 使用原始的EXTM3U行（保留EPG信息）
         header = f"""{self.extm3u_line}
 # 源文件: {self.source_url}
-# 修改时间: {now}
+# 修改时间: {beijing_time.strftime('%Y-%m-%d %H:%M:%S')} (北京时间)
 # 处理规则:
 # 1. CGTN频道改为"其他频道"
 # 2. 复制山东卫视到CCTV1下面并改为"央视频道"
