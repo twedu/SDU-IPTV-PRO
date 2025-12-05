@@ -8,15 +8,15 @@ from datetime import datetime, timezone, timedelta
 # ==================== 配置 ====================
 SOURCE_M3U_URL = "https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/multicast/multicast-weifang.m3u"
 OUTPUT_FILENAME = "multicast-rtp.m3u"
-OUTPUT_NOFCC_FILENAME = "multicast-nofcc.m3u"  # 新增：无FCC后缀的输出文件
+OUTPUT_NOFCC_FILENAME = "multicast-nofcc.m3u"  # 新增配置
 HASH_FILE = ".data/multicast_hash.txt"
 # ==============================================
 
 class MulticastM3UProcessor:
-    def __init__(self, source_url, output_file, output_nofcc_file, hash_file):
+    def __init__(self, source_url, output_file, output_nofcc_file, hash_file):  # 修改构造函数
         self.source_url = source_url
         self.output_file = output_file
-        self.output_nofcc_file = output_nofcc_file  # 新增
+        self.output_nofcc_file = output_nofcc_file  # 新增属性
         self.hash_file = hash_file
         self.channels = []
         self.extm3u_line = "#EXTM3U"  # 保存原始的EXTM3U行
@@ -308,7 +308,7 @@ class MulticastM3UProcessor:
             print("  原格式: rtsp://112.245.125.39:1554/...?tvdr=${{(b)yyyyMMddHHmmss:utc}}GMT-${{(e)yyyyMMddHHmmss:utc}}GMT")
             print("  新格式: http://192.168.100.1:5140/rtsp/112.245.125.39:1554/...?tvdr=${{(b)yyyyMMddHHmmss}}GMT-${{(e)yyyyMMddHHmmss}}GMT&r2h-seek-offset=-28800")
     
-    def generate_m3u_content(self, remove_fcc=False):
+    def generate_m3u_content(self, remove_fcc=False):  # 修改方法签名
         """生成新的M3U内容"""
         beijing_time = self.get_beijing_time()
         
@@ -390,7 +390,7 @@ class MulticastM3UProcessor:
 
 
 def main():
-    processor = MulticastM3UProcessor(SOURCE_M3U_URL, OUTPUT_FILENAME, OUTPUT_NOFCC_FILENAME, HASH_FILE)
+    processor = MulticastM3UProcessor(SOURCE_M3U_URL, OUTPUT_FILENAME, OUTPUT_NOFCC_FILENAME, HASH_FILE)  # 修改调用
     success = processor.process()
     
     if not success:
