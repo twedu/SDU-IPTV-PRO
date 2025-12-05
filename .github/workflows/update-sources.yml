@@ -53,7 +53,7 @@ jobs:
         git config --local user.name "github-actions[bot]"
         
         # 添加所有相关文件
-        git add unicast.m3u multicast-rtp.m3u .data/
+        git add unicast.m3u multicast-rtp.m3u multicast-nofcc.m3u .data/
         
         # 检查是否有变化
         if git diff --staged --quiet; then
