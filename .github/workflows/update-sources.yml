@@ -4,24 +4,18 @@ on:
   schedule:
     - cron: '0 */1 * * *'  # 每小时运行一次（北京时间）
   workflow_dispatch:
-  push:
-    branches: [ main, master ]
+  # !!! 移除了 push 触发器 !!!
 
 permissions:
   contents: write
 
 jobs:
-  concurrency:
-    group: playlist-update-group
-    cancel-in-progress: false
   update-sources:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -62,6 +56,6 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Auto-update: 合并并更新播放列表 $(date +'%Y-%m-%d %H:%M:%S')"
-          git push --force-with-lease
+          git push # 恢复最简单的 push
           echo "Changes committed and pushed"
         fi
