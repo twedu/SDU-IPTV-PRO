@@ -11,6 +11,9 @@ permissions:
   contents: write
 
 jobs:
+  concurrency:
+    group: playlist-update-group
+    cancel-in-progress: false
   update-sources:
     runs-on: ubuntu-latest
     
