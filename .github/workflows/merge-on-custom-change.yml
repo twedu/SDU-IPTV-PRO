@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+# --- 并发控制在这里，和 jobs 同级 ---
+concurrency:
+  group: playlist-update-group
+  cancel-in-progress: false
+# ----------------------------------
+
 jobs:
   merge:
     runs-on: ubuntu-latest
@@ -16,7 +22,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # 修正点1：获取完整历史
+        fetch-depth: 0
         
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -42,6 +48,6 @@ jobs:
           echo "No changes to commit"
         else
           git commit -m "Auto-update: 自定义频道变更，重新合并播放列表"
-          git push # 修正点2：使用最普通的push
+          git push
           echo "Changes committed and pushed"
         fi
