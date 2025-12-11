@@ -30,7 +30,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
         
-    # 注释掉缓存部分
+    # 注释掉缓存，避免哈希文件更新不及时的问题
     # - name: Cache .data directory
     #   uses: actions/cache@v3
     #   with:
