@@ -285,8 +285,6 @@ class M3UProcessor:
             if not self.has_source_changed(content):
                 print("源文件没有变化，跳过处理")
                 if not os.path.exists(self.output_file):
-                    with open(self.output_file, 'w', encoding='utf-8') as f:
-                        f.write("# 源文件没有变化，保持原样\n")
                 return True
             
             # 解析和处理内容
@@ -298,6 +296,8 @@ class M3UProcessor:
             
             # 生成新内容并保存
             new_content = self.generate_m3u_content()
+            # 确保输出文件的目录存在
+            os.makedirs(os.path.dirname(self.output_file), exist_ok=True)
             with open(self.output_file, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             
