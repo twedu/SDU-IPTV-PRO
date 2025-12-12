@@ -1,53 +1,78 @@
-# scripts/merge_m3u.py
 import os
-import sys
+import filecmp
 
-def merge_files(temp_file, custom_file, output_file):
+# --- 配置 ---
+# 定义文件路径
+temp_unicast_path = 'temp/temp-unicast.m3u'
+temp_multicast_r2h_path = 'temp/temp-multicast-r2h.m3u'
+temp_multicast_nofcc_path = 'temp/temp-multicast-nofcc.m3u'
+custom_path = 'custom/custom.m3u'
+
+# 定义最终输出文件路径
+final_unicast_path = 'unicast.m3u'
+final_multicast_r2h_path = 'multicast-r2h.m3u'
+final_multicast_nofcc_path = 'multicast-nofcc.m3u'
+
+# 标记，用于记录是否有文件被实际更新
+any_file_updated = False
+
+# --- 核心合并函数 ---
+def merge_files(temp_path, custom_path, final_path):
     """
-    将临时文件和自定义文件合并，生成最终文件。
-    临时文件内容在前，自定义文件内容在后。
+    合并临时文件和自定义文件，并仅在内容有变化时更新最终文件。
     """
-    try:
-        # 读取临时文件内容
-        with open(temp_file, 'r', encoding='utf-8') as f:
+    global any_file_updated
+    temp_content = ""
+    custom_content = ""
+    
+    # 读取临时文件内容
+    if os.path.exists(temp_path):
+        with open(temp_path, 'r', encoding='utf-8') as f:
             temp_content = f.read()
-
-        # 读取自定义文件内容
-        with open(custom_file, 'r', encoding='utf-8') as f:
+            
+    # 读取自定义文件内容
+    if os.path.exists(custom_path):
+        with open(custom_path, 'r', encoding='utf-8') as f:
             custom_content = f.read()
 
-        # 拼接内容
-        final_content = temp_content + custom_content
+    # 合并内容
+    merged_content = temp_content + '\n' + custom_content
 
-        # 写入最终文件
-        with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(final_content)
-        
-        print(f"成功合并: {temp_file} + {custom_file} -> {output_file}")
-        return True
+    # 检查最终文件是否已存在
+    if os.path.exists(final_path):
+        # 创建一个临时文件来存放新的合并内容，用于比较
+        temp_merged_path = final_path + '.tmp'
+        with open(temp_merged_path, 'w', encoding='utf-8') as f:
+            f.write(merged_content)
+            
+        # 比较新旧文件内容是否一致
+        if not filecmp.cmp(final_path, temp_merged_path, shallow=False):
+            # 内容不一致，更新文件
+            os.replace(temp_merged_path, final_path)
+            print(f"成功合并: {temp_path} + {custom_path} -> {final_path} (内容已更新)")
+            any_file_updated = True
+        else:
+            # 内容一致，不更新，删除临时文件
+            os.remove(temp_merged_path)
+            print(f"无变化: {final_path} 内容已是最新，跳过更新。")
+    else:
+        # 文件不存在，直接创建
+        with open(final_path, 'w', encoding='utf-8') as f:
+            f.write(merged_content)
+        print(f"成功创建: {temp_path} + {custom_path} -> {final_path} (新文件)")
+        any_file_updated = True
 
-    except FileNotFoundError as e:
-        print(f"错误: 文件未找到 - {e.filename}")
-        return False
-    except Exception as e:
-        print(f"合并时发生未知错误: {e}")
-        return False
-
+# --- 主程序 ---
 if __name__ == "__main__":
-    # 定义文件路径
-    custom_file = "custom/custom.m3u"
+    print("开始合并播放列表...")
     
-    # 定义需要合并的文件对 (临时文件, 最终输出文件)
-    merge_jobs = [
-        ("temp/temp-unicast.m3u", "unicast.m3u"),
-        ("temp/temp-multicast-r2h.m3u", "multicast-r2h.m3u"),
-        ("temp/temp-multicast-nofcc.m3u", "multicast-nofcc.m3u"),
-    ]
-
-    all_success = True
-    for temp_file, output_file in merge_jobs:
-        if not merge_files(temp_file, custom_file, output_file):
-            all_success = False
-
-    if not all_success:
-        sys.exit(1) # 如果有任何一个失败，则以错误码退出
+    # 执行合并
+    merge_files(temp_unicast_path, custom_path, final_unicast_path)
+    merge_files(temp_multicast_r2h_path, custom_path, final_multicast_r2h_path)
+    merge_files(temp_multicast_nofcc_path, custom_path, final_multicast_nofcc_path)
+    
+    # 输出最终状态
+    if any_file_updated:
+        print("合并完成，检测到文件更新。")
+    else:
+        print("合并完成，所有文件均无变化。")
