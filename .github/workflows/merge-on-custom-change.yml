@@ -22,7 +22,7 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Pull latest changes # 关键新增步骤
+    - name: Pull latest changes
       run: git pull origin ${{ github.ref_name }}
         
     - name: Set up Python
@@ -41,13 +41,11 @@ jobs:
         # 调用同一个合并脚本
         python scripts/merge_m3u.py
         
-        # 添加合并后的最终文件
-        git add unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u
-        
-        # 检查是否有变化
-        if git diff --staged --quiet; then
+        # 检查工作区是否有文件被更新
+        if git diff --quiet unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u; then
           echo "No changes to commit"
         else
+          git add unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u
           git commit -m "Auto-update: 自定义频道变更，重新合并播放列表"
           git push
           echo "Changes committed and pushed"
