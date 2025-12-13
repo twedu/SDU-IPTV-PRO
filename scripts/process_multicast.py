@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 
 # ==================== 配置 ====================
 SOURCE_M3U_URL = "https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/multicast/multicast-weifang.m3u"
-# 修改 temp/ 为 backup/
+# 【关键修改】：路径从 temp/ 改为 backup/
 OUTPUT_FILENAME = "backup/temp-multicast-r2h.m3u"
 OUTPUT_NOFCC_FILENAME = "backup/temp-multicast-nofcc.m3u"
 HASH_FILE = ".data/multicast_hash.txt"
@@ -337,6 +337,9 @@ class MulticastM3UProcessor:
             
             self.process_sorting()
             self.process_url_conversion()
+            
+            # 【关键修复】：在写入文件前，确保目录存在
+            os.makedirs(os.path.dirname(self.output_file), exist_ok=True)
             
             standard_content = self.generate_m3u_content(remove_fcc=False)
             with open(self.output_file, 'w', encoding='utf-8') as f:
