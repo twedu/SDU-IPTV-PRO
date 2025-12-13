@@ -7,19 +7,20 @@ from datetime import datetime, timezone, timedelta
 
 # ==================== 配置 ====================
 SOURCE_M3U_URL = "https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/multicast/multicast-weifang.m3u"
-OUTPUT_FILENAME = "temp/temp-multicast-r2h.m3u"
-OUTPUT_NOFCC_FILENAME = "temp/temp-multicast-nofcc.m3u"  # 新增配置
+# 修改 temp/ 为 backup/
+OUTPUT_FILENAME = "backup/temp-multicast-r2h.m3u"
+OUTPUT_NOFCC_FILENAME = "backup/temp-multicast-nofcc.m3u"
 HASH_FILE = ".data/multicast_hash.txt"
 # ==============================================
 
 class MulticastM3UProcessor:
-    def __init__(self, source_url, output_file, output_nofcc_file, hash_file):  # 修改构造函数
+    def __init__(self, source_url, output_file, output_nofcc_file, hash_file):
         self.source_url = source_url
         self.output_file = output_file
-        self.output_nofcc_file = output_nofcc_file  # 新增属性
+        self.output_nofcc_file = output_nofcc_file
         self.hash_file = hash_file
         self.channels = []
-        self.extm3u_line = "#EXTM3U"  # 保存原始的EXTM3U行
+        self.extm3u_line = "#EXTM3U"
     
     def get_beijing_time(self):
         """获取北京时间（东八区）"""
@@ -79,7 +80,6 @@ class MulticastM3UProcessor:
             if not line:
                 continue
             
-            # 保存原始的EXTM3U行（包含EPG信息）
             if line.startswith('#EXTM3U'):
                 self.extm3u_line = line
                 print(f"保留EXTM3U行: {line}")
@@ -181,7 +181,6 @@ class MulticastM3UProcessor:
             channel = self.channels.pop(idx)
             channels_to_move.insert(0, channel)
         
-        # 重新查找目标位置（因为列表已改变）
         target_idx = self.find_channel_index([target_pattern], exact_match=exact_match)
         insert_position = target_idx + 1
         
@@ -196,21 +195,19 @@ class MulticastM3UProcessor:
         """排序规则处理"""
         print("开始处理频道排序和分类...")
         
-        # 1. 将CGTN相关频道改为"其他频道"
         cgtn_indices = self.find_all_channel_indices(['CGTN'])
         for idx in cgtn_indices:
             old_group = self.channels[idx]['group_title'] or '未知分组'
             self.update_group_title(self.channels[idx], "其他频道")
             print(f"将 {self.channels[idx]['name']} 从 '{old_group}' 改为 '其他频道'")
         
-        # 2. 复制山东卫视（不包括4K版本）到CCTV1下面，并改为"央视频道"
         shandong_idx = self.find_channel_index(['山东卫视'], exact_match=True)
         cctv1_idx = self.find_channel_index(['CCTV1', 'CCTV-1'])
         
         if shandong_idx != -1 and cctv1_idx != -1:
             original_shandong = self.channels[shandong_idx]
             copied_shandong = original_shandong.copy()
-            copied_shandong['extinf'] = original_shandong['extinf']  # 确保复制
+            copied_shandong['extinf'] = original_shandong['extinf']
             
             self.update_group_title(copied_shandong, "央视频道")
             
@@ -218,14 +215,12 @@ class MulticastM3UProcessor:
             self.channels.insert(insert_position, copied_shandong)
             print(f"已复制山东卫视并插入到CCTV1后面 (位置: {insert_position})，分组改为央视频道")
         
-        # 3. 将CCTV4欧洲和美洲移动到山东少儿之后
         self.move_channels_after_target(
             source_patterns=['CCTV4欧洲', 'CCTV4美洲'],
             target_pattern='山东少儿',
             exact_match=False
         )
         
-        # 4. 处理山东经济广播
         shandong_economic_radio_idx = self.find_channel_index(['山东经济广播'], exact_match=True)
         
         if shandong_economic_radio_idx != -1:
@@ -242,34 +237,26 @@ class MulticastM3UProcessor:
     
     def convert_catchup_source(self, extinf_line):
         """转换回看源地址 - 修改后的转换规则"""
-        # 使用正则表达式提取和转换回看源
         def replace_catchup_source(match):
-            original_url = match.group(1)  # 原始rtsp地址
-            # 转换时间戳格式
-            # ${(b)yyyyMMddHHmmss:utc} -> ${(b)yyyyMMddHHmmss}
-            # ${(e)yyyyMMddHHmmss:utc} -> ${(e)yyyyMMddHHmmss}
+            original_url = match.group(1)
             converted_url = original_url.replace(
                 '${(b)yyyyMMddHHmmss:utc}', '${(b)yyyyMMddHHmmss}'
             ).replace(
                 '${(e)yyyyMMddHHmmss:utc}', '${(e)yyyyMMddHHmmss}'
             )
             
-            # 构建新的URL
             new_url = f"http://192.168.100.1:5140/rtsp/{converted_url}&r2h-seek-offset=-28800"
             return f'catchup-source="{new_url}"'
         
-        # 匹配catchup-source属性
         pattern = r'catchup-source="rtsp://([^"]+)"'
         return re.sub(pattern, replace_catchup_source, extinf_line)
     
     def convert_live_url(self, url):
         """转换直播源地址"""
-        # 将 http://192.168.0.1:5140/rtp/... 改为 http://192.168.100.1:5140/rtp/...
         return url.replace('http://192.168.0.1:5140/', 'http://192.168.100.1:5140/')
     
     def remove_fcc_suffix(self, url):
         """删除直播源中的FCC后缀"""
-        # 删除 ?fcc=124.132.240.66:15970 后缀
         return re.sub(r'\?fcc=124\.132\.240\.66:15970$', '', url)
     
     def process_url_conversion(self):
@@ -280,20 +267,17 @@ class MulticastM3UProcessor:
         live_count = 0
         
         for channel in self.channels:
-            # 转换回看源（新的转换规则）
             old_extinf = channel['extinf']
             new_extinf = self.convert_catchup_source(old_extinf)
             if old_extinf != new_extinf:
                 channel['extinf'] = new_extinf
                 catchup_count += 1
                 
-                # 输出转换示例（前几个）
                 if catchup_count <= 3:
                     print(f"回看源转换示例 {catchup_count}:")
                     print(f"  原始: {old_extinf[:100]}...")
                     print(f"  转换: {new_extinf[:120]}...")
             
-            # 转换直播源
             old_url = channel['url']
             new_url = self.convert_live_url(old_url)
             if old_url != new_url:
@@ -302,17 +286,15 @@ class MulticastM3UProcessor:
         
         print(f"URL转换完成: 回看源转换 {catchup_count} 个, 直播源转换 {live_count} 个")
         
-        # 转换示例
         if catchup_count > 0:
             print("\n转换规则示例:")
             print("  原格式: rtsp://112.245.125.39:1554/...?tvdr=${{(b)yyyyMMddHHmmss:utc}}GMT-${{(e)yyyyMMddHHmmss:utc}}GMT")
             print("  新格式: http://192.168.100.1:5140/rtsp/112.245.125.39:1554/...?tvdr=${{(b)yyyyMMddHHmmss}}GMT-${{(e)yyyyMMddHHmmss}}GMT&r2h-seek-offset=-28800")
     
-    def generate_m3u_content(self, remove_fcc=False):  # 修改方法签名
+    def generate_m3u_content(self, remove_fcc=False):
         """生成新的M3U内容"""
         beijing_time = self.get_beijing_time()
         
-        # 使用原始的EXTM3U行（保留EPG信息）
         header = f"""{self.extm3u_line}
 # 源文件: {self.source_url}
 # 修改时间: {beijing_time.strftime('%Y-%m-%d %H:%M:%S')} (北京时间)
@@ -326,7 +308,6 @@ class MulticastM3UProcessor:
 #    -> http://192.168.100.1:5140/rtsp/...${{(b)yyyyMMddHHmmss}}...${{(e)yyyyMMddHHmmss}}...&r2h-seek-offset=-28800
 # 6. 直播源: 192.168.0.1 -> 192.168.100.1"""
         
-        # 如果是生成无FCC版本，添加说明
         if remove_fcc:
             header += "\n# 7. 移除FCC后缀: ?fcc=124.132.240.66:15970"
         
@@ -336,7 +317,6 @@ class MulticastM3UProcessor:
         for channel in self.channels:
             content += channel['extinf'] + '\n'
             url = channel['url']
-            # 如果需要移除FCC后缀，则处理URL
             if remove_fcc:
                 url = self.remove_fcc_suffix(url)
             content += url + '\n'
@@ -346,37 +326,28 @@ class MulticastM3UProcessor:
     def process(self):
         """主处理流程"""
         try:
-            # 下载源文件
             content = self.download_file()
             
-            # 检查源文件是否发生变化
             if not self.has_source_changed(content):
                 print("源文件没有变化，跳过处理")
                 return True
             
-            # 解析M3U内容
             self.parse_m3u(content)
             print(f"解析完成，共 {len(self.channels)} 个频道")
             
-            # 执行排序规则
             self.process_sorting()
-            
-            # 执行URL转换
             self.process_url_conversion()
             
-            # 生成标准版本内容并保存
             standard_content = self.generate_m3u_content(remove_fcc=False)
             with open(self.output_file, 'w', encoding='utf-8') as f:
                 f.write(standard_content)
             print(f"标准版本已保存到 {self.output_file}")
             
-            # 生成无FCC版本内容并保存
             nofcc_content = self.generate_m3u_content(remove_fcc=True)
             with open(self.output_nofcc_file, 'w', encoding='utf-8') as f:
                 f.write(nofcc_content)
             print(f"无FCC版本已保存到 {self.output_nofcc_file}")
             
-            # 保存当前哈希值
             self.save_current_hash(content)
             
             print("处理完成")
@@ -390,7 +361,7 @@ class MulticastM3UProcessor:
 
 
 def main():
-    processor = MulticastM3UProcessor(SOURCE_M3U_URL, OUTPUT_FILENAME, OUTPUT_NOFCC_FILENAME, HASH_FILE)  # 修改调用
+    processor = MulticastM3UProcessor(SOURCE_M3U_URL, OUTPUT_FILENAME, OUTPUT_NOFCC_FILENAME, HASH_FILE)
     success = processor.process()
     
     if not success:
