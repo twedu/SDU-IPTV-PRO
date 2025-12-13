@@ -91,8 +91,8 @@ jobs:
         if git diff --quiet unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u; then
           echo "No changes to commit"
         else
-          # 【关键修改】：提交 backup/ 目录
-          git add unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u backup/
+          # 【关键修复】：添加 .data/ 目录到提交列表中
+          git add unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u backup/ .data/
           git commit -m "Auto-update: 合并并更新播放列表 $(date +'%Y-%m-%d %H:%M:%S')"
           git push
           echo "Changes committed and pushed"
