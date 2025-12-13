@@ -10,12 +10,14 @@ SDU-IPTV-PRO/
 │   ├── merge-on-custom-change.yml
 │   └── auto-packaging.yml
 ├── custom/
-│ └── custom.m3u
+│ ├── custom.m3u
+│ ├── custom1.m3u
+│ └── …custom*.m3u
 ├── scripts/
 │ ├── process_unicast.py
 │ ├── process_multicast.py
 │ └── merge_m3u.py
-├── temp/
+├── backup/
 │ ├── temp-unicast.m3u
 │ ├── temp-multicast-r2h.m3u
 │ └── temp-multicast-nofcc.m3u
@@ -28,6 +30,7 @@ SDU-IPTV-PRO/
 
 ## 🚀 核心特性
 - **自动更新机制**: 每小时监测原始源文件变动，实时同步最新内容
+- **灵活频道管理**: 支持创建任意数量的 `custom*.m3u` 文件，自动合并
 - **智能频道管理**: 自动完成频道分类、排序、合并，优化观看体验
 - **URL格式适配**: 组播源回看地址自动转换，兼容主流播放器
 - **高可靠自动化**：通过智能并发控制，确保多个自动化任务有序执行
@@ -42,9 +45,10 @@ SDU-IPTV-PRO/
 
 ### 自定义你的频道
 1.  Fork 本仓库
-2.  编辑 `custom/custom.m3u` 文件，添加你想要的频道
-3.  提交更改
-4.  系统将自动检测到你的修改，并在几分钟内完成合并、更新和发布
+2.  在 `custom/` 目录下，编辑或创建任意 `custom*.m3u` 文件（如 `custom.m3u`, `custom1.m3u`）
+3.  将你想要的频道按标准 M3U 格式写入文件
+4.  提交更改
+5.  系统将自动检测到你的修改，并在几分钟内完成合并、更新和发布
 
 ### 历史版本获取
 访问仓库 [Releases](../../releases) 页面，可查看所有历史版本及更新日志，按需下载。
@@ -54,11 +58,18 @@ SDU-IPTV-PRO/
 
 1.  **Update Sources (更新源)**
     - **触发**：每小时定时运行，或手动触发。
-    - **任务**：获取最新源，进行处理，生成临时文件。
+    - **任务**：
+        1.  智能检测远端源文件是否变化（通过对比 `.data` 目录中的哈希记录）
+        2.  若有变化，则下载最新源，进行处理，生成中间文件并存档于 `backup/` 目录
+        3.  合并所有 `custom/custom*.m3u` 文件，生成最终的 `.m3u` 文件
+        4.  提交所有变更，并更新哈希记录
 
 2.  **Merge on Custom Change (响应自定义变更)**
-    - **触发**：当 `custom/custom.m3u` 文件被修改时。
-    - **任务**：将自定义频道与临时源文件合并，生成最终的 `.m3u` 文件并推送到仓库。
+    - **触发**：当 `custom/` 目录下**任何** `custom*.m3u` 文件被修改时
+    - **任务**：
+        1.  读取 `backup/` 目录中已有的中间文件
+        2.  重新合并所有 `custom/custom*.m3u` 文件
+        3.  提交最终的 `.m3u` 文件变更
 
 3.  **Auto Packaging (自动打包发布)**
     - **触发**：当最终的 `.m3u` 文件发生任何变更时。
