@@ -7,7 +7,8 @@ from datetime import datetime, timezone, timedelta
 
 # ==================== 需要您修改的配置 ====================
 SOURCE_M3U_URL = "https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/unicast/unicast-ku9.m3u"
-OUTPUT_FILENAME = "temp/temp-unicast.m3u"
+# 【关键修改】：路径从 temp/ 改为 backup/
+OUTPUT_FILENAME = "backup/temp-unicast.m3u"
 HASH_FILE = ".data/unicast_hash.txt"
 # =======================================================
 
@@ -17,7 +18,7 @@ class M3UProcessor:
         self.output_file = output_file
         self.hash_file = hash_file
         self.channels = []
-        self.extm3u_line = "#EXTM3U"  # 保存原始的EXTM3U行（包含EPG信息）
+        self.extm3u_line = "#EXTM3U"
     
     def get_beijing_time(self):
         """获取北京时间（东八区）"""
@@ -77,7 +78,6 @@ class M3UProcessor:
             if not line:
                 continue
             
-            # 保存原始的EXTM3U行（包含EPG信息）
             if line.startswith('#EXTM3U'):
                 self.extm3u_line = line
                 print(f"保留EXTM3U行: {line}")
@@ -122,16 +122,13 @@ class M3UProcessor:
         """更新频道的group-title属性"""
         old_extinf = channel['extinf']
         
-        # 更新group-title属性
         if 'group-title=' in old_extinf:
-            # 替换现有的group-title
             new_extinf = re.sub(
                 r'group-title="[^"]*"',
                 f'group-title="{new_group_title}"',
                 old_extinf
             )
         else:
-            # 添加group-title属性
             new_extinf = old_extinf.replace(
                 '#EXTINF:-1 ',
                 f'#EXTINF:-1 group-title="{new_group_title}" '
@@ -145,11 +142,9 @@ class M3UProcessor:
         """查找匹配的频道索引"""
         for i, channel in enumerate(self.channels):
             if exact_match:
-                # 精确匹配
                 if any(pattern == channel['name'] for pattern in name_patterns):
                     return i
             else:
-                # 模糊匹配
                 if any(pattern in channel['name'] for pattern in name_patterns):
                     return i
         return -1
@@ -168,13 +163,11 @@ class M3UProcessor:
     
     def move_channels_after_target(self, source_patterns, target_pattern, exact_match=False):
         """将源频道移动到目标频道之后"""
-        # 查找目标频道（山东少儿）
         target_idx = self.find_channel_index([target_pattern], exact_match=exact_match)
         if target_idx == -1:
             print(f"警告: 未找到目标频道 '{target_pattern}'")
             return False
         
-        # 查找源频道（CCTV4欧洲、CCTV4美洲）
         source_indices = self.find_all_channel_indices(source_patterns, exact_match=exact_match)
         if not source_indices:
             print(f"警告: 未找到源频道 {source_patterns}")
@@ -183,16 +176,13 @@ class M3UProcessor:
         print(f"找到目标频道 '{target_pattern}' 在位置 {target_idx}")
         print(f"找到源频道 {source_patterns} 在位置 {source_indices}")
         
-        # 收集要移动的频道
         channels_to_move = []
         for idx in sorted(source_indices, reverse=True):
             channel = self.channels.pop(idx)
-            channels_to_move.insert(0, channel)  # 保持原有顺序
+            channels_to_move.insert(0, channel)
         
-        # 重新查找目标位置（因为列表已改变）
         target_idx = self.find_channel_index([target_pattern], exact_match=exact_match)
         
-        # 在目标频道后面插入
         insert_position = target_idx + 1
         for channel in channels_to_move:
             self.channels.insert(insert_position, channel)
@@ -205,48 +195,39 @@ class M3UProcessor:
         """主处理逻辑"""
         print("开始处理频道排序和分类...")
         
-        # 1. 将CGTN相关频道改为"其他频道"
         cgtn_indices = self.find_all_channel_indices(['CGTN'])
         for idx in cgtn_indices:
             old_group = self.channels[idx]['group_title'] or '未知分组'
             self.update_group_title(self.channels[idx], "其他频道")
             print(f"将 {self.channels[idx]['name']} 从 '{old_group}' 改为 '其他频道'")
         
-        # 2. 复制山东卫视（不包括4K版本）到CCTV1下面，并改为"央视频道"
         shandong_idx = self.find_channel_index(['山东卫视'], exact_match=True)
         cctv1_idx = self.find_channel_index(['CCTV1', 'CCTV-1'])
         
         if shandong_idx != -1 and cctv1_idx != -1:
-            # 复制山东卫视频道
             original_shandong = self.channels[shandong_idx]
             copied_shandong = original_shandong.copy()
             
-            # 修改复制频道的分组为"央视频道"
             self.update_group_title(copied_shandong, "央视频道")
             
-            # 在CCTV1后面插入复制的频道
             insert_position = cctv1_idx + 1
             self.channels.insert(insert_position, copied_shandong)
             print(f"已复制山东卫视并插入到CCTV1后面 (位置: {insert_position})，分组改为央视频道")
         
-        # 3. 将CCTV4欧洲和美洲移动到山东少儿之后
         self.move_channels_after_target(
             source_patterns=['CCTV4欧洲', 'CCTV4美洲'],
             target_pattern='山东少儿',
             exact_match=False
         )
         
-        # 4. 处理山东经济广播（只处理这一个广播频道）
         shandong_economic_radio_idx = self.find_channel_index(['山东经济广播'], exact_match=True)
         
         if shandong_economic_radio_idx != -1:
-            # 更改分组为"广播频道"
             radio_channel = self.channels[shandong_economic_radio_idx]
             old_group = radio_channel['group_title'] or '未知分组'
             self.update_group_title(radio_channel, "广播频道")
             print(f"将 {radio_channel['name']} 从 '{old_group}' 改为 '广播频道'")
             
-            # 移动到列表末尾
             radio_channel = self.channels.pop(shandong_economic_radio_idx)
             self.channels.append(radio_channel)
             print(f"已将 {radio_channel['name']} 移动到列表末尾")
@@ -255,7 +236,6 @@ class M3UProcessor:
     
     def generate_m3u_content(self):
         """生成新的M3U内容"""
-        # 使用原始的EXTM3U行（保留EPG信息）
         beijing_time = self.get_beijing_time()
         header = f"""{self.extm3u_line}
 # 源文件: {self.source_url}
@@ -278,29 +258,23 @@ class M3UProcessor:
     def process(self):
         """主处理流程"""
         try:
-            # 下载源文件
             content = self.download_file()
             
-            # 检查源文件是否发生变化
             if not self.has_source_changed(content):
                 print("源文件没有变化，跳过处理")
                 return True
             
-            # 解析和处理内容
             self.parse_m3u(content)
             print(f"解析完成，共 {len(self.channels)} 个频道")
             
-            # 执行所有处理规则
             self.process_channels()
             
-            # 生成新内容并保存
             new_content = self.generate_m3u_content()
-            # 确保输出文件的目录存在
+            # 【关键修改】：确保输出文件的目录存在
             os.makedirs(os.path.dirname(self.output_file), exist_ok=True)
             with open(self.output_file, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             
-            # 保存当前哈希值
             self.save_current_hash(content)
             
             print(f"处理完成，已保存到 {self.output_file}")
