@@ -3,7 +3,8 @@ name: Merge on Custom Change
 on:
   push:
     paths:
-      - 'custom/custom.m3u'
+      # 【关键修改】：使用通配符匹配所有 custom*.m3u 文件
+      - 'custom/custom*.m3u'
 
 permissions:
   contents: write
@@ -45,7 +46,7 @@ jobs:
         if git diff --quiet unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u; then
           echo "No changes to commit"
         else
-          # 【关键修改】：提交 backup/ 目录
+          # 提交 backup/ 目录
           git add unicast.m3u multicast-r2h.m3u multicast-nofcc.m3u backup/
           git commit -m "Auto-update: 自定义频道变更，重新合并播放列表"
           git push
