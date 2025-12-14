@@ -85,11 +85,15 @@ jobs:
         export TZ='Asia/Shanghai'
         TODAY=$(date +'%Y%m%d')
         
-        # 统计今天已有多少个 release
-        EXISTING_COUNT=$(gh release list --limit 100 | grep -c "存档${TODAY}-v" || echo "0")
+        # 获取今天最大的版本号
+        LAST_VERSION=$(gh release list --limit 100 | grep "存档${TODAY}-v" | sed 's/.*存档'"${TODAY}"'-v\([0-9]*\).*/\1/' | sort -nr | head -n 1)
         
-        # 新版本号
-        NEW_VERSION=$((EXISTING_COUNT + 1))
+        # 如果没有找到任何版本，从 1 开始
+        if [ -z "$LAST_VERSION" ]; then
+          NEW_VERSION=1
+        else
+          NEW_VERSION=$((LAST_VERSION + 1))
+        fi
         
         RELEASE_NAME="存档${TODAY}-v${NEW_VERSION}"
         
