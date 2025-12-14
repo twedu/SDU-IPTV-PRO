@@ -1,6 +1,8 @@
 name: Merge on Custom Change
 
 on:
+  schedule:
+    - cron: '0 */1 * * *'  # 每小时运行一次（北京时间）
   push:
     paths:
       # 【关键修改】：使用通配符匹配所有 custom*.m3u 文件
