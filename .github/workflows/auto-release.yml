@@ -2,9 +2,24 @@ name: Auto Packaging
 
 on:
   schedule:
-    # 每个整点检测一次（UTC 时间，北京时间需 +8）
     - cron: '0 * * * *'
   workflow_dispatch: 
+
+# ============================================
+# 📌 配置区域 - 在此添加需要监测的文件
+# ============================================
+# 写法示例：
+#   根目录文件：    unicast.m3u
+#   子目录文件：    subdir/example.m3u
+#   多层目录：      path/to/file.m3u
+# ============================================
+env:
+  MONITOR_FILES: |
+    unicast.m3u
+    multicast-r2h.m3u
+    multicast-nofcc.m3u
+    multicast-static.m3u
+# ============================================
 
 permissions:
   contents: write
@@ -23,58 +38,42 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Check for m3u file changes
+    - name: Check for file changes
       id: check_changes
       run: |
-        # 获取上次提交和当前提交之间的变化
-        # 如果是首次运行或没有上次 release tag，则检查最近一次提交
-        
-        CHANGED_FILES=""
-        HAS_CHANGES="false"
-        
-        # 获取最近一次 release 的 tag
         LAST_TAG=$(git tag --sort=-creatordate | head -n 1)
         
         if [ -z "$LAST_TAG" ]; then
-          # 没有任何 tag，检查最近一次提交的变化
           CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
         else
-          # 对比上次 tag 到当前 HEAD 的变化
           CHANGED_FILES=$(git diff --name-only "$LAST_TAG" HEAD 2>/dev/null || echo "")
         fi
         
         echo "Changed files since last release:"
         echo "$CHANGED_FILES"
         
-        # 检查三个 m3u 文件是否有变化
-        UNICAST_CHANGED="false"
-        MULTICAST_R2H_CHANGED="false"
-        MULTICAST_NOFCC_CHANGED="false"
+        CHANGED_LIST=""
+        while IFS= read -r file; do
+          file=$(echo "$file" | xargs)
+          [ -z "$file" ] && continue
+          if echo "$CHANGED_FILES" | grep -q "^${file}$"; then
+            CHANGED_LIST="${CHANGED_LIST}${file}"$'\n'
+          fi
+        done <<< "$MONITOR_FILES"
         
-        if echo "$CHANGED_FILES" | grep -q "^unicast.m3u$"; then
-          UNICAST_CHANGED="true"
-          HAS_CHANGES="true"
+        if [ -n "$CHANGED_LIST" ]; then
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo "changed_list<<EOF" >> $GITHUB_OUTPUT
+          echo -n "$CHANGED_LIST" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        else
+          echo "has_changes=false" >> $GITHUB_OUTPUT
         fi
-        
-        if echo "$CHANGED_FILES" | grep -q "^multicast-r2h.m3u$"; then
-          MULTICAST_R2H_CHANGED="true"
-          HAS_CHANGES="true"
-        fi
-        
-        if echo "$CHANGED_FILES" | grep -q "^multicast-nofcc.m3u$"; then
-          MULTICAST_NOFCC_CHANGED="true"
-          HAS_CHANGES="true"
-        fi
-        
-        echo "has_changes=$HAS_CHANGES" >> $GITHUB_OUTPUT
-        echo "unicast_changed=$UNICAST_CHANGED" >> $GITHUB_OUTPUT
-        echo "multicast_r2h_changed=$MULTICAST_R2H_CHANGED" >> $GITHUB_OUTPUT
-        echo "multicast_nofcc_changed=$MULTICAST_NOFCC_CHANGED" >> $GITHUB_OUTPUT
 
     - name: Skip if no changes
       if: steps.check_changes.outputs.has_changes == 'false'
       run: |
-        echo "No m3u file changes detected. Skipping release."
+        echo "No monitored file changes detected. Skipping release."
 
     - name: Get version info
       if: steps.check_changes.outputs.has_changes == 'true'
@@ -85,15 +84,21 @@ jobs:
         export TZ='Asia/Shanghai'
         TODAY=$(date +'%Y%m%d')
         
-        # 获取今天最大的版本号
-        LAST_VERSION=$(gh release list --limit 100 | grep "存档${TODAY}-v" | sed 's/.*存档'"${TODAY}"'-v\([0-9]*\).*/\1/' | sort -nr | head -n 1)
+        # 获取今天最大的版本号（只提取纯数字）
+        LAST_VERSION=$(gh release list --limit 100 2>/dev/null \
+          | grep "存档${TODAY}-v" \
+          | sed 's/.*存档'"${TODAY}"'-v\([0-9]*\).*/\1/' \
+          | grep -E '^[0-9]+$' \
+          | sort -nr \
+          | head -n 1)
         
-        # 如果没有找到任何版本，从 1 开始
-        if [ -z "$LAST_VERSION" ]; then
-          NEW_VERSION=1
-        else
-          NEW_VERSION=$((LAST_VERSION + 1))
+        # 确保 LAST_VERSION 是有效数字
+        if ! [[ "$LAST_VERSION" =~ ^[0-9]+$ ]]; then
+          LAST_VERSION=0
         fi
+        
+        NEW_VERSION=$((LAST_VERSION + 1))
+        NEW_VERSION=${NEW_VERSION:-1}
         
         RELEASE_NAME="存档${TODAY}-v${NEW_VERSION}"
         
@@ -105,7 +110,6 @@ jobs:
       run: |
         RELEASE_NAME="${{ steps.version.outputs.release_name }}"
         
-        # 创建压缩包，只包含指定文件类型
         zip -r "${RELEASE_NAME}.zip" . \
           -i "*.m3u" \
           -i "*.py" \
@@ -125,41 +129,26 @@ jobs:
         export TZ='Asia/Shanghai'
         BEIJING_TIME=$(date +'%Y-%m-%d %H:%M:%S')
         
-        # 构建上传文件列表
         ASSETS="${RELEASE_NAME}.zip"
+        CHANGED_LIST="${{ steps.check_changes.outputs.changed_list }}"
         
-        # 添加有变化的 m3u 文件
-        if [ "${{ steps.check_changes.outputs.unicast_changed }}" == "true" ]; then
-          ASSETS="$ASSETS unicast.m3u"
-        fi
-        
-        if [ "${{ steps.check_changes.outputs.multicast_r2h_changed }}" == "true" ]; then
-          ASSETS="$ASSETS multicast-r2h.m3u"
-        fi
-        
-        if [ "${{ steps.check_changes.outputs.multicast_nofcc_changed }}" == "true" ]; then
-          ASSETS="$ASSETS multicast-nofcc.m3u"
-        fi
+        while IFS= read -r file; do
+          [ -z "$file" ] && continue
+          if [ -f "$file" ]; then
+            ASSETS="$ASSETS $file"
+          fi
+        done <<< "$CHANGED_LIST"
         
         echo "Uploading assets: $ASSETS"
         
-        # 构建 release notes
         NOTES="📅 更新时间: $BEIJING_TIME"
         NOTES="$NOTES\n\n📝 本次更新的文件:"
         
-        if [ "${{ steps.check_changes.outputs.unicast_changed }}" == "true" ]; then
-          NOTES="$NOTES\n- unicast.m3u"
-        fi
+        while IFS= read -r file; do
+          [ -z "$file" ] && continue
+          NOTES="$NOTES\n- $file"
+        done <<< "$CHANGED_LIST"
         
-        if [ "${{ steps.check_changes.outputs.multicast_r2h_changed }}" == "true" ]; then
-          NOTES="$NOTES\n- multicast-r2h.m3u"
-        fi
-        
-        if [ "${{ steps.check_changes.outputs.multicast_nofcc_changed }}" == "true" ]; then
-          NOTES="$NOTES\n- multicast-nofcc.m3u"
-        fi
-        
-        # 创建 Release
         gh release create "$RELEASE_NAME" \
           --title "$RELEASE_NAME" \
           --notes "$(echo -e "$NOTES")" \
