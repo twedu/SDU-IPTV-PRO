@@ -7,6 +7,7 @@
 ## 📁 项目结构
 ```
 SDU-IPTV-PRO/
+├── .data/hash
 ├── .github/
 │ └── workflows/
 │   └── update-sources.yml
@@ -25,12 +26,11 @@ SDU-IPTV-PRO/
 │ ├── temp-multicast-r2h.m3u
 │ └── temp-multicast-nofcc.m3u
 ├── logo/
+├── external/
 ├── unicast.m3u
 ├── multicast-r2h.m3u
 ├── multicast-nofcc.m3u
 ├── multicast-static.m3u
-├── unicast-taian.m3u
-├── .data/hash
 └── README.md
 ```
 
