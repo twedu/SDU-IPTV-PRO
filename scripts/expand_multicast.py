@@ -18,6 +18,7 @@ HASH_FILE = ".data/expand_hash.txt"
 EXTERNAL_SOURCES = [
     "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_北京联通.txt",
     "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_河北联通.txt"
+    "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_天津联通.txt"
 ]
 
 # 5. 自定义模糊匹配规则
