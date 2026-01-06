@@ -2,16 +2,24 @@ name: Expand Multicast Sources
 
 on:
   schedule:
-    # 每3小时运行一次 ( cron语法: 分 时 日 月 周)
     - cron: '0 */3 * * *'
-  workflow_dispatch: # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
+    - name: Checkout public repository
       uses: actions/checkout@v4
+      with:
+        path: public_repo
+
+    - name: Checkout private repository (Hidden Logic)
+      uses: actions/checkout@v4
+      with:
+        repository: sggc/SDU-IPTV-NEW
+        path: private_repo
+        token: ${{ secrets.PRIVATE_REPO_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -23,16 +31,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests
 
-    - name: Run expand script
-      run: python scripts/expand_multicast.py
+    - name: Run expand script from private repo
+      run: |
+        cd public_repo
+        python ../private_repo/scripts/expand_multicast.py
 
     - name: Commit changes
       run: |
+        cd public_repo
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        # 添加修改的文件
         git add expand/multicast-expand.m3u .data/expand_hash.txt
-        # 检查是否有变动
         if git diff --staged --quiet; then
           echo "No changes to commit"
         else
