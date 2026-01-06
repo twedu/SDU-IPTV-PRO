@@ -14,11 +14,13 @@ OUTPUT_FILE = "expand/multicast-expand.m3u"
 # 3. 哈希记录文件（用于判断是否需要更新）
 HASH_FILE = ".data/expand_hash.txt"
 
-# 4. 外部直播源列表（按优先级排序，排在前面的优先匹配）
+# 4. 外部直播源列表（按优先级排序）
+# 格式：(URL, 标记前缀)
+# 标记前缀会附加到直播源后面，用于区分来源
 EXTERNAL_SOURCES = [
-    "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_北京联通.txt",
-    "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_河北联通.txt"
-    "https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_天津联通.txt"
+    ("https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_北京联通.txt", "$北京联通"),
+    ("https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_天津联通.txt", "$天津联通"),
+    ("https://raw.githubusercontent.com/q1017673817/iptvz/main/组播_河北联通.txt", "$河北联通")
 ]
 
 # 5. 自定义模糊匹配规则
@@ -42,19 +44,29 @@ def get_file_hash(filepath):
     with open(filepath, 'rb') as f:
         return hashlib.md5(f.read()).hexdigest()
 
-def get_content_hash(content_list):
-    """获取内容列表的MD5哈希值"""
-    combined = "".join(content_list)
-    return hashlib.md5(combined.encode('utf-8')).hexdigest()
+def get_content_hash(content):
+    """获取内容字符串的MD5哈希值"""
+    return hashlib.md5(content.encode('utf-8')).hexdigest()
 
 def download_external_sources():
-    """下载所有外部源并合并为一个字典 {name: [url1, url2]}"""
-    external_data = {}
+    """
+    下载所有外部源并返回：
+    1. 外部源字典：{频道名: [(url, tag, source_index), ...]}
+    2. 外部源哈希列表：[hash1, hash2, ...]
+    """
+    external_data = {}  # {频道名: [(url, tag, source_index)]}
+    external_hashes = []  # 存储每个外部源的哈希
+    
     print("正在下载外部源...")
-    for url in EXTERNAL_SOURCES:
+    for source_idx, (url, tag) in enumerate(EXTERNAL_SOURCES):
         try:
             resp = requests.get(url, timeout=10)
             resp.encoding = 'utf-8'
+            
+            # 计算该外部源的哈希
+            source_hash = get_content_hash(resp.text)
+            external_hashes.append(source_hash)
+            
             lines = resp.text.splitlines()
             for line in lines:
                 if ',' in line:
@@ -64,11 +76,16 @@ def download_external_sources():
                     if name and url:
                         if name not in external_data:
                             external_data[name] = []
-                        external_data[name].append(url)
-            print(f"成功获取: {url}")
+                        # 存储URL和对应的标记
+                        external_data[name].append((url, tag, source_idx))
+            
+            print(f"✓ 成功获取: {url} (哈希: {source_hash[:8]}...)")
         except Exception as e:
-            print(f"获取失败 {url}: {e}")
-    return external_data
+            print(f"✗ 获取失败 {url}: {e}")
+            # 失败时使用空哈希，确保下次重试
+            external_hashes.append("")
+    
+    return external_data, external_hashes
 
 def is_match(local_name, external_name):
     """判断本地频道名和外部频道名是否匹配"""
@@ -97,29 +114,30 @@ def process_m3u():
     # 1. 检查哈希，决定是否需要运行
     input_hash = get_file_hash(INPUT_FILE)
     
-    # 获取外部源的内容用于哈希比对（不解析，只比对内容变化）
+    # 下载外部源（用于哈希比对）
+    print("检查源文件变化...")
     try:
-        external_contents = []
-        for url in EXTERNAL_SOURCES:
-            r = requests.get(url, timeout=10)
-            external_contents.append(r.text)
-        external_hash = get_content_hash(external_contents)
+        _, external_hashes = download_external_sources()
+        external_hash = "|".join(external_hashes)  # 组合所有外部源哈希
     except:
         print("警告：无法获取外部源进行哈希比对，将强制运行。")
         external_hash = "force_run"
 
-    current_combined_hash = hashlib.md5((input_hash + external_hash).encode('utf-8')).hexdigest()
+    # 计算组合哈希（包括输入文件和所有外部源）
+    current_combined_hash = get_content_hash(input_hash + "|" + external_hash)
 
+    # 检查是否需要运行
     if os.path.exists(HASH_FILE):
         with open(HASH_FILE, 'r') as f:
             old_hash = f.read().strip()
         if old_hash == current_combined_hash:
-            print("检测到源文件未变化，跳过运行。")
+            print("✓ 检测到源文件未变化，跳过运行。")
             return
-
-    # 2. 开始处理
-    print("源文件有变化，开始处理...")
-    external_sources = download_external_sources()
+    
+    print("✓ 检测到源文件变化，开始处理...")
+    
+    # 2. 重新下载外部源（用于实际处理）
+    external_sources, _ = download_external_sources()
     
     if not os.path.exists(INPUT_FILE):
         print(f"错误：找不到输入文件 {INPUT_FILE}")
@@ -129,13 +147,13 @@ def process_m3u():
         lines = f.readlines()
 
     output_lines = []
-    append_lines = [] # 存放多出来的源
+    append_lines = []  # 存放多出来的源
     i = 0
     n = len(lines)
 
     while i < n:
         line = lines[i]
-        output_lines.append(line)  # 追加当前行（保持原格式）
+        output_lines.append(line)  # 追加当前行
         
         # 如果不是EXTINF行，直接跳到下一行
         if not line.strip().startswith('#EXTINF'):
@@ -148,46 +166,60 @@ def process_m3u():
         # 检查下一行是否存在
         if i + 1 < n:
             next_line = lines[i + 1]
-            # 判断下一行是否为空行、注释或有效URL
             next_line_stripped = next_line.strip()
             is_empty = not next_line_stripped or next_line_stripped.startswith('#')
             is_url = next_line_stripped.startswith('http://') or next_line_stripped.startswith('rtp://')
             
-            # 只有下一行是URL时才追加，否则视为需要补全
             if not is_empty and is_url:
-                output_lines.append(next_line)  # 追加原有的URL行
-                i += 2  # 跳过URL行
+                # 已有源，直接保留
+                output_lines.append(next_line)
+                i += 2
             else:
                 # 需要补全
-                matched_urls = []
+                matched_sources = []  # [(url, tag, source_index, matched_external_name)]
                 matched_names = []
                 
                 # 在外部源中查找
-                for ext_name, urls in external_sources.items():
+                for ext_name, sources in external_sources.items():
                     if is_match(channel_name, ext_name):
-                        matched_urls.extend(urls)
+                        matched_sources.extend([(url, tag, idx, ext_name) for url, tag, idx in sources])
                         matched_names.append(ext_name)
                         print(f"匹配检查: {channel_name} <- {ext_name} (命中)")
                 
-                if matched_urls:
-                    # 填入第一个匹配的源
-                    output_lines.append(matched_urls[0] + '\n')
-                    print(f"✓ 匹配成功: {channel_name} <- {matched_names[0]} ({matched_urls[0]})")
+                if matched_sources:
+                    # 按优先级排序（source_index小的在前）
+                    matched_sources.sort(key=lambda x: x[2])
                     
-                    # 剩下的源放入 append_lines（用于追加到末尾）
-                    if len(matched_urls) > 1:
-                        for extra_url in matched_urls[1:]:
-                            append_lines.append(line.rstrip('\n') + '\n')  # 去除原换行，避免空行
-                            append_lines.append(extra_url + '\n')
-                            print(f"  → 追加备用源: {extra_url}")
+                    # 取第一个作为主要源
+                    primary_url, primary_tag, _, matched_name = matched_sources[0]
+                    output_lines.append(primary_url + primary_tag + "\n")
+                    print(f"✓ 匹配成功: {channel_name} <- {matched_name} ({primary_url}{primary_tag})")
+                    
+                    # 剩下的放入 append_lines（追加到末尾）
+                    if len(matched_sources) > 1:
+                        # 按来源分组计数
+                        source_counter = {}  # {source_index: count}
+                        for url, tag, idx, matched_name in matched_sources[1:]:
+                            # 添加计数标记（如果有多个相同来源）
+                            count_tag = ""
+                            if idx in source_counter:
+                                source_counter[idx] += 1
+                                count_tag = str(source_counter[idx])
+                            else:
+                                source_counter[idx] = 2  # 从2开始，因为第一个是1（默认不显示）
+                                count_tag = "1"
+                            
+                            full_tag = tag + count_tag
+                            append_lines.append(line.rstrip('\n') + '\n')
+                            append_lines.append(url + full_tag + '\n')
+                            print(f"  → 追加备用源: {matched_name} ({url}{full_tag})")
                 else:
-                    # 没找到匹配，追加下一行（可能为空）
+                    # 没找到匹配，追加下一行
                     output_lines.append(next_line)
                     print(f"✗ 未匹配: {channel_name}")
                     i += 1
                 i += 1
         else:
-            # 文件末尾，没有下一行
             i += 1
 
     # 3. 写入文件
@@ -197,7 +229,7 @@ def process_m3u():
             f.write("\n# --- Extra Sources ---\n")
             f.writelines(append_lines)
 
-    print(f"处理完成，已保存至 {OUTPUT_FILE}")
+    print(f"✓ 处理完成，已保存至 {OUTPUT_FILE}")
 
     # 4. 更新哈希文件
     with open(HASH_FILE, 'w') as f:
