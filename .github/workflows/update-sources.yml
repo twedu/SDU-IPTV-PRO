@@ -2,7 +2,7 @@ name: Update Sources
 
 on:
   schedule:
-    - cron: '0 */1 * * *'  # 每小时运行一次（北京时间）
+    - cron: '0 0 */3 * *'  # 每三天运行一次（北京时间）
   workflow_dispatch:
   push:
     branches: [ main, master ]
