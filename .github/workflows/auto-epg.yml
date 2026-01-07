@@ -30,27 +30,293 @@ jobs:
       run: |
         pip install requests
     
-    - name: Run EPG Aggregation Script
+    - name: Run EPG Aggregation Script with path fix
       run: |
-        cd private_repo/scripts
-        python aggregate_epg.py
+        echo "=== 运行EPG脚本（修复路径）==="
         
-    - name: Simple Commit and Push
+        # 进入脚本目录
+        cd private_repo/scripts
+        
+        # 获取绝对路径
+        WORK_DIR=$(pwd)
+        echo "脚本目录: $WORK_DIR"
+        
+        # 计算正确的输出路径
+        # 从 private_repo/scripts 向上三级到工作目录根
+        ROOT_DIR=$(dirname $(dirname $(dirname $WORK_DIR)))
+        OUTPUT_DIR="$ROOT_DIR/public_repo/EPG"
+        
+        echo "根目录: $ROOT_DIR"
+        echo "输出目录: $OUTPUT_DIR"
+        
+        # 确保输出目录存在
+        mkdir -p "$OUTPUT_DIR"
+        
+        # 修改Python脚本临时修复路径
+        cat > aggregate_epg_fixed.py << 'EOF'
+import json
+import os
+import gzip
+import xml.etree.ElementTree as ET
+import requests
+from datetime import datetime
+
+def load_config(config_path):
+    with open(config_path, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def download_content(url):
+    try:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        return response.content
+    except Exception as e:
+        print(f"下载失败 {url}: {e}")
+        return None
+
+def decompress_if_needed(content, url):
+    if url.endswith('.gz'):
+        try:
+            return gzip.decompress(content).decode('utf-8')
+        except Exception as e:
+            print(f"Gzip 解压失败: {e}")
+            return None
+    return content.decode('utf-8')
+
+def is_channel_wanted(channel_element, keywords):
+    """
+    检查频道名称是否匹配白名单关键词
+    """
+    display_names = channel_element.findall('display-name')
+    for dn in display_names:
+        name_text = dn.text
+        if name_text:
+            for keyword in keywords:
+                if keyword.lower() in name_text.lower():
+                    return True, keyword  # 返回匹配到的关键词
+    return False, None
+
+def aggregate_epg(config):
+    seen_channel_ids = set()
+    final_channels = []
+    final_programmes = []
+    
+    # 记录日志
+    log_entries = {
+        'success': [],       # 成功获取的频道
+        'not_found': [],      # 白名单关键词完全匹配不到的频道
+        'ignored': []       # 找到但不在白名单的频道
+    }
+    
+    keywords = config.get('keywords', [])
+    # 记录白名单关键词，用于后续检查哪些关键词没有匹配到
+    matched_keywords = set()
+    
+    print(f"白名单关键词: {keywords}")
+
+    for source in config['sources']:
+        source_name = source['name']
+        print(f"正在处理源: {source_name}")
+        
+        content = download_content(source['url'])
+        if not content:
+            continue
+        
+        xml_text = decompress_if_needed(content, source['url'])
+        if not xml_text:
+            continue
+            
+        try:
+            root = ET.fromstring(xml_text)
+        except ET.ParseError as e:
+            print(f"XML 解析错误 {source_name}: {e}")
+            continue
+
+        # 处理频道定义
+        for channel in root.findall('channel'):
+            channel_id = channel.get('id')
+            if not channel_id:
+                continue
+                
+            # 优先级控制：如果ID已存在，跳过
+            if channel_id in seen_channel_ids:
+                continue
+                
+            # 获取频道名称
+            display_names = channel.findall('display-name')
+            channel_names = [dn.text for dn in display_names if dn.text]
+            channel_name_str = ', '.join(channel_names) if channel_names else '未知'
+            
+            # 检查是否在白名单中
+            is_wanted, matched_keyword = is_channel_wanted(channel, keywords)
+            
+            if is_wanted:
+                seen_channel_ids.add(channel_id)
+                final_channels.append(channel)
+                matched_keywords.add(matched_keyword)
+                log_entries['success'].append({
+                    'id': channel_id,
+                    'name': channel_name_str,
+                    'matched_keyword': matched_keyword,
+                    'source': source_name
+                })
+            else:
+                # 找到了这个频道，但不在白名单中
+                log_entries['ignored'].append({
+                    'id': channel_id,
+                    'name': channel_name_str,
+                    'source': source_name
+                })
+
+        # 处理节目单
+        for programme in root.findall('programme'):
+            channel_id = programme.get('channel')
+            if channel_id in seen_channel_ids:
+                final_programmes.append(programme)
+    
+    # 检查哪些白名单关键词没有匹配到
+    for keyword in keywords:
+        if keyword not in matched_keywords:
+            # 检查是否有频道名称包含该关键词但在所有源中都没找到
+            found = False
+            for entry in log_entries['ignored']:
+                if keyword.lower() in entry['name'].lower():
+                    found = True
+                    break
+            if not found:
+                log_entries['not_found'].append({
+                    'keyword': keyword,
+                    'reason': '在所有源中均未找到匹配的频道名称'
+                })
+            else:
+                log_entries['not_found'].append({
+                    'keyword': keyword,
+                    'reason': '找到包含该关键词的频道，但被过滤规则排除'
+                })
+    
+    return final_channels, final_programmes, log_entries
+
+def save_epg_and_log(channels, programmes, log_entries, output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # 1. 生成并保存 EPG XML
+    tv = ET.Element('tv')
+    tv.set('generator-info-name', 'sggc-epg-aggregator')
+    tv.set('generator-info-url', 'https://github.com/sggc/SDU-IPTV-PRO')
+
+    for ch in channels:
+        tv.append(ch)
+    for prog in programmes:
+        tv.append(prog)
+        
+    xml_str = ET.tostring(tv, encoding='utf-8', xml_declaration=True)
+    
+    xml_path = os.path.join(output_dir, 'epg.xml')
+    gz_path = os.path.join(output_dir, 'epg.xml.gz')
+    
+    with open(xml_path, 'wb') as f:
+        f.write(xml_str)
+    print(f"已保存: {xml_path}")
+    
+    with open(gz_path, 'wb') as f:
+        with gzip.GzipFile(fileobj=f, mode='wb') as gz_file:
+            gz_file.write(xml_str)
+    print(f"已保存: {gz_path}")
+
+    # 2. 生成日志文件
+    log_path = os.path.join(output_dir, 'epg_log.txt')
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    with open(log_path, 'w', encoding='utf-8') as f:
+        f.write(f"EPG 聚合日志\n")
+        f.write(f"生成时间: {current_time}\n")
+        f.write("=" * 60 + "\n\n")
+        
+        # 成功获取的频道
+        f.write(f"【成功获取的频道】共 {len(log_entries['success'])} 个\n")
+        f.write("-" * 60 + "\n")
+        for entry in log_entries['success']:
+            f.write(f"频道ID: {entry['id']}\n")
+            f.write(f"频道名称: {entry['name']}\n")
+            f.write(f"匹配关键词: {entry['matched_keyword']}\n")
+            f.write(f"来源: {entry['source']}\n")
+            f.write("\n")
+        
+        
+        # 未找到的频道
+        f.write(f"\n【未匹配到频道的白名单关键词】共 {len(log_entries['not_found'])} 个\n")
+        f.write("-" * 60 + "\n")
+        for entry in log_entries['not_found']:
+            f.write(f"关键词: {entry['keyword']}\n")
+            f.write(f"原因: {entry['reason']}\n")
+            f.write("\n")
+
+        # 被忽略的频道
+        f.write(f"\n【被忽略的频道】共 {len(log_entries['ignored'])} 个\n")
+        f.write("-" * 60 + "\n")
+        for entry in log_entries['ignored']:
+            f.write(f"频道ID: {entry['id']}\n")
+            f.write(f"频道名称: {entry['name']}\n")
+            f.write(f"来源: {entry['source']}\n")
+            f.write(f"忽略原因: 不在白名单关键词列表中\n")
+            f.write("\n")
+  
+    print(f"已生成日志: {log_path}")
+
+def main():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    config_path = os.path.join(script_dir, '../config/epg_config.json')
+    
+    # 使用环境变量或命令行参数获取输出目录
+    import sys
+    if len(sys.argv) > 1:
+        output_dir = sys.argv[1]
+    else:
+        # 默认使用环境变量或固定路径
+        output_dir = os.environ.get('EPG_OUTPUT_DIR', '$OUTPUT_DIR')
+    
+    print(f"输出目录: {output_dir}")
+    
+    config = load_config(config_path)
+    channels, programmes, log_entries = aggregate_epg(config)
+    
+    print(f"聚合完成: {len(channels)} 个频道, {len(programmes)} 个节目单")
+    
+    save_epg_and_log(channels, programmes, log_entries, output_dir)
+
+if __name__ == "__main__":
+    main()
+EOF
+        
+        # 运行修复后的脚本，传递正确的输出目录
+        EPG_OUTPUT_DIR="$OUTPUT_DIR" python aggregate_epg_fixed.py
+    
+    - name: Commit and Push EPG files
       run: |
         cd public_repo
         
-        # 配置Git用户
+        echo "检查生成的EPG文件:"
+        ls -la EPG/
+        
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # 强制添加EPG目录下的所有文件
-        git add -f EPG/
+        # 添加EPG文件
+        git add EPG/
         
-        # 提交（如果有变更）
+        if git diff --staged --quiet; then
+          echo "没有变更需要提交"
+          echo "尝试添加所有文件..."
+          git add -A
+        fi
+        
         if ! git diff --staged --quiet; then
           git commit -m "更新EPG数据 $(date '+%Y-%m-%d %H:%M:%S')"
           git push
-          echo "EPG更新已推送"
+          echo "推送成功"
         else
-          echo "没有变更，跳过提交"
+          echo "没有检测到变更"
         fi
