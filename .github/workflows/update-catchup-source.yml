@@ -3,7 +3,7 @@ name: Update Catchup Source
 on:
   schedule:
     # 每6小时检查一次
-    - cron: '0 */6 * * *'
+    - cron: '0 */12 * * *'
   
   # 当 multicast-origin.m3u 发生变化时触发
   push:
@@ -111,7 +111,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           
           # 文件已经在上一步 add 过了
-          git commit -m "🔄 自动更新 catchup-source [$(date +'%Y-%m-%d %H:%M:%S')]"
+          git commit -m "自动更新 catchup-source [$(date +'%Y-%m-%d %H:%M:%S')]"
           git push
           
           echo "✅ 已提交并推送更改"
