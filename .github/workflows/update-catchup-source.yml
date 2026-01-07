@@ -36,19 +36,14 @@ jobs:
       - name: Create directories if not exist
         run: |
           mkdir -p .github/expand
-          mkdir -p .github/scripts
           mkdir -p .data
-      
-      - name: Clear hash if force update
-        if: ${{ github.event.inputs.force_update == 'true' }}
-        run: |
-          rm -f .data/catchup_source_hash.txt
-          echo "已清除哈希缓存，将强制更新"
       
       - name: Run update script
         id: update
+        env:
+          FORCE_UPDATE: ${{ github.event.inputs.force_update || 'false' }}
         run: |
-          python .github/scripts/update_catchup_source.py
+          python scripts/update_catchup_source.py
       
       - name: Check for changes
         id: check_changes
