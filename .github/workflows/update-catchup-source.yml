@@ -4,6 +4,12 @@ on:
   schedule:
     # 每6小时检查一次
     - cron: '0 */6 * * *'
+  
+  # 当 multicast-origin.m3u 发生变化时触发
+  push:
+    paths:
+      - '.github/expand/multicast-origin.m3u'
+  
   workflow_dispatch:
     inputs:
       force_update:
@@ -37,6 +43,21 @@ jobs:
         run: |
           mkdir -p .github/expand
           mkdir -p .data
+          echo "目录结构:"
+          ls -la .github/
+          ls -la .github/expand/ || echo ".github/expand/ 目录为空或不存在"
+      
+      - name: Check local file exists
+        run: |
+          if [ -f ".github/expand/multicast-origin.m3u" ]; then
+            echo "✅ 本地源文件存在"
+            echo "文件大小: $(wc -c < .github/expand/multicast-origin.m3u) bytes"
+            echo "行数: $(wc -l < .github/expand/multicast-origin.m3u)"
+          else
+            echo "❌ 本地源文件不存在: .github/expand/multicast-origin.m3u"
+            echo "请先创建该文件"
+            exit 1
+          fi
       
       - name: Run update script
         id: update
@@ -45,16 +66,42 @@ jobs:
         run: |
           python scripts/update_catchup_source.py
       
+      - name: Verify output file
+        run: |
+          echo "--- 检查输出文件 ---"
+          if [ -f ".github/expand/multicast-merge.m3u" ]; then
+            echo "✅ 输出文件已生成"
+            echo "文件大小: $(wc -c < .github/expand/multicast-merge.m3u) bytes"
+            echo "行数: $(wc -l < .github/expand/multicast-merge.m3u)"
+          else
+            echo "❌ 输出文件不存在"
+          fi
+      
       - name: Check for changes
         id: check_changes
         run: |
-          if git diff --quiet; then
+          echo "--- Git 状态 ---"
+          git status
+          
+          echo ""
+          echo "--- 未跟踪的文件 ---"
+          git status --porcelain
+          
+          # 添加所有文件（包括新文件）
+          git add -A
+          
+          echo ""
+          echo "--- 添加后的状态 ---"
+          git status
+          
+          # 检查是否有变化
+          if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "没有检测到文件变化"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
             echo "检测到文件变化:"
-            git diff --stat
+            git diff --cached --stat
           fi
       
       - name: Commit and push changes
@@ -62,15 +109,23 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .
+          
+          # 文件已经在上一步 add 过了
           git commit -m "🔄 自动更新 catchup-source [$(date +'%Y-%m-%d %H:%M:%S')]"
           git push
+          
+          echo "✅ 已提交并推送更改"
       
       - name: Summary
         run: |
           echo "## 更新摘要" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
             echo "✅ catchup-source 已成功更新并推送" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### 更新的文件" >> $GITHUB_STEP_SUMMARY
+            echo "- \`.github/expand/multicast-merge.m3u\`" >> $GITHUB_STEP_SUMMARY
+            echo "- \`.data/catchup_source_hash.txt\`" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ 没有需要更新的内容" >> $GITHUB_STEP_SUMMARY
           fi
