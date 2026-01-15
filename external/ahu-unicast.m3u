@@ -63,6 +63,11 @@ http://10.255.126.3:8006/AHBKLIVE/ccfffb202e2e4795b85241af37abc8de
 http://10.255.126.3:8006/AHBKLIVE/00000001000000050000000000000569
 #EXTINF:-1 tvg-id="快乐垂钓" tvg-name="快乐垂钓" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/快乐垂钓.png" group-title="其他频道",快乐垂钓
 http://10.255.126.3:8006/AHBKLIVE/4d0ec3c7a7cf41458ce3c7e241f7ed7a
+#EXTINF:-1 tvg-id="四海钓鱼" tvg-name="四海钓鱼" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/四海钓鱼.png" group-title="其他频道",四海钓鱼
+http://10.255.126.3:8006/AHBKLIVE/11111120251124000000000000000001
+#EXTINF:-1 tvg-id="环球旅游" tvg-name="环球旅游" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/环球旅游.png" group-title="其他频道",环球旅游
+http://10.255.126.3:8006/AHBKLIVE/11111120251124000000000000000003
+
 #EXTINF:-1 tvg-id="安徽卫视" tvg-name="安徽卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/安徽卫视.png" group-title="卫视频道",安徽卫视
 http://10.255.126.3:8006/AHBKLIVE/00000001000000050000000000000039
 #EXTINF:-1 tvg-id="东方卫视" tvg-name="东方卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/东方卫视.png" group-title="卫视频道",东方卫视
@@ -125,6 +130,8 @@ http://10.255.126.3:8006/AHBKLIVE/00000001000000050000000000000086
 http://10.255.126.3:8006/AHBKLIVE/12000000000000000000000000000003
 #EXTINF:-1 tvg-id="三沙卫视" tvg-name="三沙卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/三沙卫视.png" group-title="卫视频道",三沙卫视
 http://10.255.126.3:8006/AHBKLIVE/00000001000000050000000000000589
+#EXTINF:-1 tvg-id="三沙卫视" tvg-name="三沙卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/三沙卫视.png" group-title="卫视频道",三沙卫视高清
+http://10.255.127.35:6060/gitv_live/G_SANSHA-HQ/index.m3u8?Playtype=1&gMac=00&partnerCode=-&m3u8_level=2
 #EXTINF:-1 tvg-id="重庆卫视" tvg-name="重庆卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/重庆卫视.png" group-title="卫视频道",重庆卫视
 http://10.255.126.3:8006/AHBKLIVE/00000001000000050000000000000083
 #EXTINF:-1 tvg-id="四川卫视" tvg-name="四川卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/四川卫视.png" group-title="卫视频道",四川卫视
@@ -163,8 +170,6 @@ http://10.255.126.3:8006/AHBKLIVE/11111100000000000000000000000011
 http://10.255.126.3:8006/AHBKLIVE/11111100000000000000000000000015
 #EXTINF:-1 tvg-id="滁州新闻综合" tvg-name="滁州新闻综合" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/滁州新闻综合.png" group-title="安徽频道",滁州新闻综合
 http://10.255.126.3:8006/AHBKLIVE/11111120210510000000000000000081
-#EXTINF:-1 tvg-id="滁州公共" tvg-name="滁州公共" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/滁州公共.png" group-title="安徽频道",滁州公共
-http://10.255.126.3:8006/AHBKLIVE/11111120210510000000000000000083
 #EXTINF:-1 tvg-id="滁州科教" tvg-name="滁州科教" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/滁州科教.png" group-title="安徽频道",滁州科教
 http://10.255.126.3:8006/AHBKLIVE/11111120210510000000000000000085
 #EXTINF:-1 tvg-id="毫州综合" tvg-name="毫州综合" tvg-logo="https://gcore.jsdelivr.net/gh/taksssss/tv/icon/毫州综合.png" group-title="安徽频道",亳州综合
