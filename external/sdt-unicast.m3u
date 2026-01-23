@@ -414,11 +414,11 @@ http://150.138.8.143/00/SNM/CHANNEL00001044/index.m3u8
 http://150.138.8.143/00/SNM/CHANNEL00001014/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="东平综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安东平.png" group-title="泰安" resolution="1920x1080" ,东平综合
 http://150.138.8.143/00/SNM/CHANNEL00001001/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="宁阳综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安宁阳.png" group-title="泰安" resolution="1920x1080" ,宁阳综合
+#EXTINF:-1 tvg-id="" tvg-name="宁阳综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安宁阳一套.png" group-title="泰安" resolution="1920x1080" ,宁阳综合
 http://150.138.8.143/00/SNM/CHANNEL00001071/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="岱岳综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安岱岳.png" group-title="泰安" resolution="1920x1080" ,岱岳综合
 http://150.138.8.143/00/SNM/CHANNEL00001013/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="新泰乡村" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安新泰.png" group-title="泰安" resolution="1920x1080" ,新泰乡村
+#EXTINF:-1 tvg-id="" tvg-name="新泰乡村" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安新泰乡村.png" group-title="泰安" resolution="1920x1080" ,新泰乡村
 http://150.138.8.143/00/SNM/CHANNEL00001066/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="新泰综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安新泰.png" group-title="泰安" resolution="1920x1080" ,新泰综合
 http://150.138.8.143/00/SNM/CHANNEL00001029/index.m3u8
@@ -531,7 +531,7 @@ http://150.138.8.143/00/SNM/CHANNEL00001084/index.m3u8
 http://150.138.8.143/00/SNM/CHANNEL00001018/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="冠县综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/聊城冠县.png" group-title="聊城" resolution="720x576" ,冠县综合
 http://150.138.8.143/00/SNM/CHANNEL00001040/index.m3u8
-#EXTINF:-1 tvg-id="" tvg-name="宁阳生活" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安宁阳.png" group-title="泰安" resolution="720x576" ,宁阳生活
+#EXTINF:-1 tvg-id="" tvg-name="宁阳生活" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安宁阳二套.png" group-title="泰安" resolution="720x576" ,宁阳生活
 http://150.138.8.143/00/SNM/CHANNEL00001072/index.m3u8
 #EXTINF:-1 tvg-id="" tvg-name="寿光综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/潍坊寿光.png" group-title="潍坊" resolution="720x576" ,寿光综合
 http://150.138.8.143/00/SNM/CHANNEL00000702/index.m3u8
