@@ -17,8 +17,8 @@
 
 ### 使用方法
 复制以下任意链接到常见直播壳中即可使用：
-- GitHub：https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/refs/heads/main/EPG/sggc.xml.gz
-- Gitee：https://gitee.com/sggc2005/SDU-IPTV-PRO/raw/main/EPG/sggc.xml.gz
+- GitHub：https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc.xml.gz
+- Gitee：https://gitee.com/sggc2005/SD-EPG/raw/main/EPG/sggc.xml.gz
 
 ## 📖 使用指南
 ### 直接使用
