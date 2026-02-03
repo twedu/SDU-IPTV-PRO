@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+<title>Gitee.com</title>
+<meta content='noindex, nofollow' name='robots'>
+<meta charset='utf-8'>
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="https://cn-assets.gitee.com/assets/favicon-9007bd527d8a7851c8330e783151df58.ico" />
+<meta content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1.0, user-scalable=no' name='viewport'>
+<link rel="stylesheet" media="all" href="https://cn-assets.gitee.com/assets/external_link/app-63d83fa99bf6e872d2f0538ac385edfa.css" />
+</head>
+<body>
+<div class='gitee-external-link-wrapper'>
+<img class="logo-img" src="/static/images/logo-black.svg" alt="Logo black" />
+<div class='content-box'>
+<div class='content-title'>即将跳转到外部网站</div>
+<div class='content-text'>
+您将要访问的链接不属于 Gitee.com，请注意您的账号和财产安全。
+<div>如需浏览，请复制后使用浏览器访问。</div>
+</div>
+<div class='content-link'>
+<div class='external-link-href'></div>
+</div>
+<div class='ui button orange external-link-btn'>继续前往</div>
+</div>
+</div>
+</body>
+</html>
+<script>
+  window.is_black = false
+</script>
+<script src="https://cn-assets.gitee.com/assets/external_link/app-4a971e8761687ee214b9017366c681af.js"></script>
