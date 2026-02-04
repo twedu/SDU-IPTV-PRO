@@ -1,50 +1,43 @@
-name: Download EPG File (6:00 & 13:00)
+name: Download SGGC EPG
 
 on:
   schedule:
-    # 每天 UTC 22:00 = 北京时间次日 6:00
+    # UTC 22:00 (北京时间 6:00)
     - cron: '0 22 * * *'
-    # 每天 UTC 5:00  = 北京时间当天 13:00
+    # UTC 5:00 (北京时间 13:00)
     - cron: '0 5 * * *'
-  # 保留手动触发，方便测试
+  # 允许手动触发
   workflow_dispatch:
-    inputs:
-      file_url:
-        description: '要下载的文件URL（手动运行时使用）'
-        required: true
-        type: string
 
 jobs:
-  download-and-save:
+  download-epg:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Create EPG directory
+      
+      - name: Create EPG directory if not exists
         run: mkdir -p EPG
-
-      - name: Download file with original name
+      
+      - name: Download sggc.xml.gz
         run: |
-          # 定时任务使用固定URL，手动任务使用输入的URL
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            # 【替换为你实际要定时下载的固定URL】
-            EPG_URL="https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc.xml.gz"
-          else
-            EPG_URL="${{ github.event.inputs.file_url }}"
+          curl -L -o EPG/sggc.xml.gz https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc.xml.gz
+      
+      - name: Verify download
+        run: |
+          if [ ! -f EPG/sggc.xml.gz ]; then
+            echo "Error: Download failed!"
+            exit 1
           fi
-          
-          wget -q --content-disposition -P EPG/ "${EPG_URL}"
-
+          echo "File size: $(stat -c%s EPG/sggc.xml.gz) bytes"
+      
       - name: Commit and push changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          message: "Auto update EPG file (${{ github.event_name }})"
-          add: "EPG/*"
-          committer_name: GitHub Actions
-          committer_email: actions@github.com
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add EPG/sggc.xml.gz
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update sggc.xml.gz $(date '+%Y-%m-%d %H:%M:%S UTC')"
+          git push
