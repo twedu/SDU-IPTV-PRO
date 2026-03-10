@@ -65,7 +65,7 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00000700/index.m3u8
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001025/index.m3u8
 #EXTINF:-1 tvg-name="枣庄经济生活" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东/枣庄.png" group-title="山东频道" ,枣庄经济生活
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001026/index.m3u8
-#EXTINF:-1 tvg-name="滕州综合" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东/泰安综合.png" group-title="山东频道" ,滕州综合
+#EXTINF:-1 tvg-name="滕州综合" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东/枣庄滕州.png" group-title="山东频道" ,滕州综合
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001028/index.m3u8
 #EXTINF:-1 tvg-name="山东卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东卫视4K.png" group-title="卫视频道" catchup="default" catchup-source="http://39.134.144.6:8089/PLTV/88888888/224/3221226760/index.m3u8?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" ,山东卫视4K
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL40000005/index.m3u8
@@ -602,3 +602,39 @@ http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001081/index.m3u8
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001114/index.m3u8
 #EXTINF:-1 tvg-name="岱岳综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/泰安岱岳.png" group-title="泰安" ,岱岳综合
 http://ucdn.sd.chinamobile.com:8089/00/SNM/CHANNEL00001013/index.m3u8
+#EXTINF:-1 tvg-name="德州经济生活" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/德州生活.png" group-title="市级频道" ,德州经济生活
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000207/index.m3u8
+#EXTINF:-1 tvg-name="淄博新闻综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/淄博新闻.png" group-title="市级频道" ,淄博新闻综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000283/index.m3u8
+#EXTINF:-1 tvg-name="青岛QTV-1" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/QTV1.png" group-title="市级频道" ,青岛QTV-1
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000500/index.m3u8
+#EXTINF:-1 tvg-name="青岛QTV-2" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/QTV2.png" group-title="市级频道" ,青岛QTV-2
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000501/index.m3u8
+#EXTINF:-1 tvg-name="青岛QTV-4" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/QTV4.png" group-title="市级频道" ,青岛QTV-4
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000503/index.m3u8
+#EXTINF:-1 tvg-name="岚山综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/日照岚山.png" group-title="日照" ,岚山综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001044/index.m3u8
+#EXTINF:-1 tvg-name="荣成综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/威海荣成.png" group-title="威海" ,荣成综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001053/index.m3u8
+#EXTINF:-1 tvg-name="平度综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/青岛平度.png" group-title="青岛" ,平度综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001054/index.m3u8
+#EXTINF:-1 tvg-name="青州文化旅游" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/潍坊青州.png" group-title="潍坊" ,青州文化旅游
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001057/index.m3u8
+#EXTINF:-1 tvg-name="蓬莱综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台蓬莱.png" group-title="烟台" ,蓬莱综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001088/index.m3u8
+#EXTINF:-1 tvg-name="黄岛生活" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/青岛黄岛.png" group-title="青岛" ,黄岛生活
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001087/index.m3u8
+#EXTINF:-1 tvg-name="黄岛综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/青岛黄岛.png" group-title="青岛" ,黄岛综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001086/index.m3u8
+#EXTINF:-1 tvg-name="长岛综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台长岛.png" group-title="烟台" ,长岛综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001090/index.m3u8
+#EXTINF:-1 tvg-name="海阳综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台海阳.png" group-title="烟台" ,海阳综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001091/index.m3u8
+#EXTINF:-1 tvg-name="海阳综艺" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台海阳.png" group-title="烟台" ,海阳综艺
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001092/index.m3u8
+#EXTINF:-1 tvg-name="五莲新闻" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/日照五莲.png" group-title="日照" ,五莲新闻
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001068/index.m3u8
+#EXTINF:-1 tvg-name="牟平生活" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台牟平.png" group-title="烟台" ,牟平生活
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001077/index.m3u8
+#EXTINF:-1 tvg-name="牟平综合" tvg-logo="https://raw.githubusercontent.com/sumingyd/IPTV-Scanner-Editor-Pro/main/logo/山东/烟台牟平.png" group-title="烟台" ,牟平综合
+http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001076/index.m3u8
