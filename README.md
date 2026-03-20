@@ -1,23 +1,13 @@
 # SDU-IPTV-PRO
-基于 [plsy1/iptv](https://github.com/plsy1/iptv) 数据的自动排序工具
-
-## 🚀 核心特性
-- **自动更新机制**: 每小时监测原始源文件变动，实时同步最新内容
-- **灵活频道管理**: 支持创建任意数量的 `custom*.m3u` 文件，自动合并
-- **智能频道管理**: 自动完成频道分类、排序、合并，优化观看体验
-- **URL格式适配**: 组播源回看地址自动转换，兼容主流播放器
-- **高可靠自动化**：通过智能并发控制，确保多个自动化任务有序执行
-- **版本自动留档**: 源文件变更时自动创建Release，保留历史版本
-- **多格式输出**: 提供单播、组播（含去FCC版本）多类型源文件
-
+基于 [plsy1/iptv](https://github.com/plsy1/iptv) 
 
 ## 📒 聚合型EPG
 以项目 [plsy1/epg](https://github.com/plsy1/epg) 为蓝本，一方面对标多渠道 EPG 数据源进行交叉核验，另一方面定向采集电视猫与搜视网平台的山东地市频道节目信息，通过内容增补、数据替换等精细化优化，着力打造适配本仓库的最全版本 EPG 资源。
 
 ### 使用方法
 复制以下任意链接到常见直播壳中即可使用：
-- GitHub：https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc.xml.gz
-- Gitee：https://gitee.com/sggc2005/SD-EPG/raw/main/EPG/sggc.xml.gz
+- 无desc节目描述：https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc.xml.gz
+- 有desc节目描述：https://raw.githubusercontent.com/sggc/SD-EPG/refs/heads/main/EPG/sggc-desc.xml.gz
 
 ## 📖 使用指南
 ### 直接使用
