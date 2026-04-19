@@ -1,6 +1,6 @@
 #EXTM3U url-tvg="https://raw.githubusercontent.com/plsy1/epg/main/e/seven-days.xml.gz"
 # 源文件: https://raw.githubusercontent.com/plsy1/iptv/refs/heads/main/multicast/multicast-weifang.m3u
-# 修改时间: 2026-04-04 10:51:55 (北京时间)
+# 修改时间: 2026-04-19 11:41:27 (北京时间)
 # 处理规则:
 # 1. CGTN频道改为"其他频道"
 # 2. 复制山东卫视到CCTV1下面并改为"央视频道"
@@ -218,12 +218,12 @@ http://192.168.100.1:5140/rtp/239.253.246.56:8000
 http://192.168.100.1:5140/rtp/239.253.246.57:8000
 #EXTINF:-1 tvg-name="宁夏卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/宁夏卫视.png" , 宁夏卫视
 http://192.168.100.1:5140/rtp/239.253.246.150:8000
-#EXTINF:-1 tvg-name="山西卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/山西卫视.png" , 山西卫视
-http://192.168.100.1:5140/rtp/239.253.246.48:8000
 #EXTINF:-1 tvg-name="陕西卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/陕西卫视.png" , 陕西卫视
 http://192.168.100.1:5140/rtp/239.253.246.49:8000
 #EXTINF:-1 tvg-name="内蒙古卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/内蒙古卫视.png" , 内蒙古卫视
 http://192.168.100.1:5140/rtp/239.253.246.58:8000
+#EXTINF:-1 tvg-name="山西卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/山西卫视.png" , 山西卫视
+http://192.168.100.1:5140/rtp/239.253.246.48:8000
 #EXTINF:-1 tvg-name="农林卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/农林卫视.png" , 农林卫视
 http://192.168.100.1:5140/rtp/239.253.246.70:8000
 #EXTINF:-1 tvg-name="厦门卫视" group-title="卫视频道" tvg-logo="https://fastly.jsdelivr.net/gh/plsy1/iptv@master/logo/厦门卫视.png" , 厦门卫视
