@@ -175,8 +175,6 @@ rtsp://223.99.188.13/PLTV/88888888/224/3221227602/372377003.smil
 rtsp://223.99.188.13/PLTV/88888888/224/3221227671/378992639.smil
 #EXTINF:-1 tvg-name="东方财经" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/东方财经.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",东方财经
 rtsp://223.99.188.13/PLTV/88888888/224/3221227488/10000100000000060000000008787985_0.smil
-#EXTINF:-1 tvg-name="中华特产" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中华特产.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",中华特产
-rtsp://223.99.188.13/PLTV/88888888/224/3221227643/376263962.smil
 #EXTINF:-1 tvg-name="中国交通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中国交通.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",中国交通
 rtsp://223.99.188.13/PLTV/88888888/224/3221226885/10000100000000060000000004936411_0.smil
 #EXTINF:-1 tvg-name="乐游" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/乐游.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",乐游
