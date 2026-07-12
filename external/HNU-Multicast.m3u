@@ -35,8 +35,6 @@ rtp://225.1.4.216:1269
 rtp://225.1.4.226:2506
 #EXTINF:-1 tvg-name="CCTV-5＋高清" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV5.png" group-title="未分组",CCTV-5＋高清
 rtp://225.1.4.75:1104
-#EXTINF:-1 tvg-name="CCTV4K超高清" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV4K.png" group-title="未分组",CCTV4K超高清
-rtp://225.1.5.65:1375
 #EXTINF:-1 tvg-name="河南移动电视" group-title="未分组",河南移动电视
 rtp://225.1.5.40:1350
 #EXTINF:-1 tvg-name="CGTN" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CGTN.png" group-title="未分组",CGTN
@@ -153,8 +151,6 @@ rtp://225.1.4.172:1711
 rtp://225.1.4.97:1126
 #EXTINF:-1 tvg-name="中国教育2" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中国教育2.png" group-title="未分组",中国教育-2
 rtp://225.1.4.165:1206
-#EXTINF:-1 tvg-name="爱上4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/爱上4K测试体验.png" group-title="未分组",爱上-4k
-rtp://225.1.4.162:1204
 #EXTINF:-1 tvg-name="山东教育" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东教育.png" group-title="未分组",山东教育
 rtp://225.1.4.164:1205
 #EXTINF:-1 tvg-name="三沙卫视" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/三沙卫视.png" group-title="未分组",三沙卫视
@@ -195,23 +191,3 @@ rtp://225.1.5.37:1347
 rtp://225.1.5.38:1348
 #EXTINF:-1 tvg-name="CGTN俄语" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CGTN俄语.png" group-title="未分组",CGTN俄语
 rtp://225.1.5.39:1349
-#EXTINF:-1 tvg-name="北京卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/北京卫视4K.png" group-title="未分组",北京卫视4K
-rtp://225.1.5.67:1377
-#EXTINF:-1 tvg-name="东方卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/东方卫视4K.png" group-title="未分组",东方卫视4K
-rtp://225.1.5.70:1380
-#EXTINF:-1 tvg-name="江苏卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/江苏卫视4K.png" group-title="未分组",江苏卫视4K
-rtp://225.1.5.71:1381
-#EXTINF:-1 tvg-name="浙江卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/浙江卫视4K.png" group-title="未分组",浙江卫视4K
-rtp://225.1.5.72:1382
-#EXTINF:-1 tvg-name="山东卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东卫视4K.png" group-title="未分组",山东卫视4K
-rtp://225.1.5.73:1383
-#EXTINF:-1 tvg-name="湖南卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/湖南卫视4K.png" group-title="未分组",湖南卫视4K
-rtp://225.1.5.76:1386
-#EXTINF:-1 tvg-name="四川卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/四川卫视4K.png" group-title="未分组",四川卫视4K
-rtp://225.1.5.75:1385
-#EXTINF:-1 tvg-name="深圳卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/深圳卫视4K.png" group-title="未分组",深圳卫视4K
-rtp://225.1.5.68:1378
-#EXTINF:-1 tvg-name="广东卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/广东卫视4K.png" group-title="未分组",广东卫视4K
-rtp://225.1.5.69:1379
-#EXTINF:-1 tvg-name="河南卫视4K" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/河南卫视.png" group-title="未分组",河南卫视4K
-rtp://225.1.4.254:1300
