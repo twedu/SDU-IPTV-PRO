@@ -823,39 +823,3 @@ http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227407/1.m3u8?fmt=ts2hl
 
 
 
-#EXTINF:-1 tvg-name="军旅剧场" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/军旅剧场.png" group-title="NewTV",军旅剧场
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jljc.m3u8
-#EXTINF:-1 tvg-name="精品大剧" group-title="NewTV",精品大剧
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jpdj.m3u8
-#EXTINF:-1 tvg-name="家庭剧场" group-title="NewTV",家庭剧场
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jtjc.m3u8
-#EXTINF:-1 tvg-name="古装剧场" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/古装剧场.png" group-title="NewTV",古装剧场
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/gzjc.m3u8
-#EXTINF:-1 tvg-name="东北热剧" group-title="NewTV",东北热剧
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/dbrj.m3u8
-#EXTINF:-1 tvg-name="欢乐剧场" group-title="NewTV",欢乐剧场
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/hljc.m3u8
-#EXTINF:-1 tvg-name="中国功夫" group-title="NewTV",中国功夫
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/zggf.m3u8
-#EXTINF:-1 tvg-name="动作电影" group-title="NewTV",动作电影
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/dzdy.m3u8
-#EXTINF:-1 tvg-name="惊悚悬疑" group-title="NewTV",惊悚悬疑
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jsxy.m3u8
-#EXTINF:-1 tvg-name="金牌综艺" group-title="NewTV",金牌综艺
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jpzy.m3u8
-#EXTINF:-1 tvg-name="热播精选" group-title="NewTV",热播精选
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/rbjx.m3u8
-#EXTINF:-1 tvg-name="精品综合" group-title="NewTV",精品综合
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jpzh.m3u8
-#EXTINF:-1 tvg-name="精品体育" group-title="NewTV",精品体育
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jpty.m3u8
-#EXTINF:-1 tvg-name="怡伴健康" group-title="NewTV",怡伴健康
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/ybjk.m3u8
-#EXTINF:-1 tvg-name="农业致富" group-title="NewTV",农业致富
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/nyzf.m3u8
-#EXTINF:-1 tvg-name="精品纪录" group-title="NewTV",精品纪录
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jpjl.m3u8
-#EXTINF:-1 tvg-name="军事评论" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/军事.png" group-title="NewTV",军事评论
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/jspl.m3u8
-#EXTINF:-1 tvg-name="爱情喜剧" group-title="NewTV",爱情喜剧
-http://120.222.144.223:80/test2025.str.vod01.icntvcdn.com/live/aqxj.m3u8
