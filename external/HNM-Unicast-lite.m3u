@@ -46,17 +46,17 @@ http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227184/index.m3u8
 #EXTINF:-1 tvg-name="CCTV12" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV12.png" group-title="中央-河南移动",CCTV12
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226479/index.m3u8
 #EXTINF:-1 tvg-name="CCTV13" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV13.png" group-title="中央-河南移动",CCTV13
+http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226480/index.m3u8
+#EXTINF:-1 tvg-name="CCTV13" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV13.png" group-title="中央-河南移动",CCTV13
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227266/index.m3u8
 #EXTINF:-1 tvg-name="CCTV14" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV14.png" group-title="中央-河南移动",CCTV14
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227173/index.m3u8
-#EXTINF:-1 tvg-name="CCTV14" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV14.png" group-title="中央-河南移动",CCTV14
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226475/index.m3u8
+#EXTINF:-1 tvg-name="CCTV14" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV14.png" group-title="中央-河南移动",CCTV14
+http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226572/index.m3u8
 #EXTINF:-1 tvg-name="CCTV15" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV15.png" group-title="中央-河南移动",CCTV15
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227175/index.m3u8
+http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226590/index.m3u8
 #EXTINF:-1 tvg-name="CCTV15" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV15.png" group-title="中央-河南移动",CCTV15
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226635/index.m3u8
-#EXTINF:-1 tvg-name="CCTV5+" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV5+.png" group-title="中央-河南移动",CCTV5+
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227348/index.m3u8
+http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226478/index.m3u8
 #EXTINF:-1 tvg-name="CCTV5+" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV5+.png" group-title="中央-河南移动",CCTV5+
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226477/index.m3u8
 #EXTINF:-1 tvg-name="CCTV17" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV17.png" group-title="中央-河南移动",CCTV17
