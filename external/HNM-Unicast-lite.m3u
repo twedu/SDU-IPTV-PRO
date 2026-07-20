@@ -318,8 +318,6 @@ http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226570/index.m3u8
 #EXTINF:-1 tvg-name="北京纪实科教" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/北京纪实科教.png" group-title="数字-河南移动",北京纪实科教
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227408/index.m3u8
 #EXTINF:-1 tvg-name="卡酷少儿" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/卡酷少儿.png" group-title="数字-河南移动",卡酷少儿
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227212/index.m3u8
-#EXTINF:-1 tvg-name="卡酷少儿" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/卡酷少儿.png" group-title="数字-河南移动",卡酷少儿
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226640/index.m3u8
 #EXTINF:-1 tvg-name="游戏风云" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/游戏风云.png" group-title="数字-河南移动",游戏风云
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226328/index.m3u8
@@ -381,8 +379,6 @@ http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226654/index.m3u8
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226406/index.m3u8
 #EXTINF:-1 tvg-name="优漫卡通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/优漫卡通.png" group-title="数字-河南移动",优漫卡通
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226606/index.m3u8
-#EXTINF:-1 tvg-name="嘉佳卡通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/嘉佳卡通.png" group-title="数字-河南移动",嘉佳卡通
-http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221227208/index.m3u8
 #EXTINF:-1 tvg-name="嘉佳卡通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/嘉佳卡通.png" group-title="数字-河南移动",嘉佳卡通
 http://iptv.cdn.ha.chinamobile.com/PLTV/88888888/224/3221226412/index.m3u8
 #EXTINF:-1 tvg-name="金鹰卡通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/金鹰卡通.png" group-title="数字-河南移动",金鹰卡通
