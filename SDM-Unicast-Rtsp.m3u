@@ -20,7 +20,7 @@ rtsp://223.99.188.13/PLTV/88888888/224/3221227275/100001000000000600000000056717
 #EXTINF:-1 tvg-name="CCTV9" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV9.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV9
 rtsp://223.99.188.13/PLTV/88888888/224/3221226230/10000100000000060000000002553858_0.smil
 #EXTINF:-1 tvg-name="CCTV10" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV10.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV10
-rtsp://223.99.188.13/PLTV/88888888/224/3221226228/10000100000000060000000002553868_0.smil
+rtsp://223.99.188.13/PLTV/88888888/224/3221227688/382255445.smil
 #EXTINF:-1 tvg-name="CCTV11" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV11.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV11
 rtsp://223.99.188.13/PLTV/88888888/224/3221227240/10000100000000060000000005622087_0.smil
 #EXTINF:-1 tvg-name="CCTV12" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV12.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV12
@@ -28,7 +28,7 @@ rtsp://223.99.188.13/PLTV/88888888/224/3221226227/100001000000000600000000025538
 #EXTINF:-1 tvg-name="CCTV13" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV13.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV13
 rtsp://223.99.188.13/PLTV/88888888/224/3221227266/10000100000000060000000005622088_0.smil
 #EXTINF:-1 tvg-name="CCTV14" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV14.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV14
-rtsp://223.99.188.13/PLTV/88888888/224/3221226226/10000100000000060000000002553878_0.smil
+rtsp://223.99.188.13/PLTV/88888888/224/3221227691/382255484.smil
 #EXTINF:-1 tvg-name="CCTV15" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV15.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV15
 rtsp://223.99.188.13/PLTV/88888888/224/3221227235/10000100000000060000000005622089_0.smil
 #EXTINF:-1 tvg-name="CCTV16" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CCTV16.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="央视频道",CCTV16
@@ -159,8 +159,6 @@ rtsp://223.99.188.13/PLTV/88888888/224/3221227571/100001000000000600000000092402
 rtsp://223.99.188.13/PLTV/88888888/224/3221227546/10000100000000060000000009240172_0.smil
 #EXTINF:-1 tvg-name="CHC影迷电影" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/CHC影迷电影.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",CHC影迷电影
 rtsp://223.99.188.13/PLTV/88888888/224/3221227554/10000100000000060000000009240201_0.smil
-#EXTINF:-1 tvg-name="中学生" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中学生.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",中学生
-rtsp://223.99.188.13/PLTV/88888888/224/3221227629/376263832.smil
 #EXTINF:-1 tvg-name="北京纪实科教" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/北京纪实科教.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",北京纪实科教
 rtsp://223.99.188.13/PLTV/88888888/224/3221227551/10000100000000060000000009071772_0.smil
 #EXTINF:-1 tvg-name="四海钓鱼" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/四海钓鱼.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",四海钓鱼
@@ -175,8 +173,6 @@ rtsp://223.99.188.13/PLTV/88888888/224/3221227602/372377003.smil
 rtsp://223.99.188.13/PLTV/88888888/224/3221227671/378992639.smil
 #EXTINF:-1 tvg-name="东方财经" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/东方财经.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",东方财经
 rtsp://223.99.188.13/PLTV/88888888/224/3221227488/10000100000000060000000008787985_0.smil
-#EXTINF:-1 tvg-name="中华特产" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中华特产.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",中华特产
-rtsp://223.99.188.13/PLTV/88888888/224/3221227643/376263962.smil
 #EXTINF:-1 tvg-name="中国交通" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/中国交通.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",中国交通
 rtsp://223.99.188.13/PLTV/88888888/224/3221226885/10000100000000060000000004936411_0.smil
 #EXTINF:-1 tvg-name="乐游" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/乐游.png" catchup="append" catchup-source="?playseek=${(b)yyyyMMddHHmmss}-${(e)yyyyMMddHHmmss}" group-title="其他频道",乐游
@@ -446,8 +442,6 @@ http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001042/index.m3u8
 #EXTINF:-1 tvg-name="青州文化旅游" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东2/潍坊青州.png" group-title="潍坊" catchup="default" catchup-source="http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.tvod.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00001057/index.m3u8?startTime=${(b)yyyyMMdd'T'HHmmss'.00Z'|-08:00}&endTime=${(e)yyyyMMdd'T'HHmmss'.00Z'|-08:00}",青州文化旅游
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001057/index.m3u8
-#EXTINF:-1 tvg-name="寿光综合" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东2/潍坊寿光.png" group-title="潍坊" catchup="default" catchup-source="http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.tvod.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00000702/index.m3u8?startTime=${(b)yyyyMMdd'T'HHmmss'.00Z'|-08:00}&endTime=${(e)yyyyMMdd'T'HHmmss'.00Z'|-08:00}",寿光综合
-http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00000702/index.m3u8
 #EXTINF:-1 tvg-name="寿光综合" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东2/潍坊寿光.png" group-title="潍坊" catchup="default" catchup-source="http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.tvod.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00001000/index.m3u8?startTime=${(b)yyyyMMdd'T'HHmmss'.00Z'|-08:00}&endTime=${(e)yyyyMMdd'T'HHmmss'.00Z'|-08:00}",寿光综合
 http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.live.zte.com////CHANNEL00001000/index.m3u8
 #EXTINF:-1 tvg-name="寿光蔬菜" tvg-logo="https://gh-proxy.org/https://raw.githubusercontent.com/sggc/SDU-IPTV-PRO/main/logo/山东2/潍坊寿光蔬菜.png" group-title="潍坊" catchup="default" catchup-source="http://ucdn-zte.sd.chinamobile.com:8089/shandong_cabletv.tvod.zte.com/223.99.253.7:8081/00/SNM/CHANNEL00001045/index.m3u8?startTime=${(b)yyyyMMdd'T'HHmmss'.00Z'|-08:00}&endTime=${(e)yyyyMMdd'T'HHmmss'.00Z'|-08:00}",寿光蔬菜
